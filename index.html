@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#060912">
+<title>System Design × AI/ML — Master Roadmap | bytebymanas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f5fb;--bg2:#eaeffa;--card:rgba(255,255,255,.82);--solid:#fff;--ink:#101830;--muted:#58667f;--faint:#8793aa;--line:rgba(30,50,110,.12);--line2:rgba(30,50,110,.2);--accent:#3458db;--accent2:#0b9aa6;--violet:#7451c8;--amber:#b36a12;--pink:#c43e86;--good:#14935f;--goodbg:rgba(20,147,95,.1);--shadow:0 18px 50px rgba(28,42,100,.1);--glow:rgba(52,88,219,.16);--r:20px;--mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;--disp:"Space Grotesk","Inter",system-ui,sans-serif;--ease:cubic-bezier(.22,.8,.2,1)}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#060912;--bg2:#0a1020;--card:rgba(15,23,43,.66);--solid:#0e1628;--ink:#eef3ff;--muted:#9eacc8;--faint:#6b7a99;--line:rgba(140,165,255,.14);--line2:rgba(140,165,255,.26);--accent:#7c9cff;--accent2:#4de8d4;--violet:#b49aff;--amber:#ffb86b;--pink:#ff8fc2;--good:#56e0a0;--goodbg:rgba(86,224,160,.1);--shadow:0 24px 60px rgba(0,0,0,.4);--glow:rgba(124,156,255,.22)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+.shell{max-width:1360px;margin:auto;padding:0 28px}
+.aurora{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.aurora:before,.aurora:after{content:"";position:absolute;width:62vw;height:62vw;border-radius:50%;filter:blur(110px);opacity:.5}
+.aurora:before{left:-18vw;top:-24vw;background:radial-gradient(circle,rgba(92,120,255,.5),transparent 65%);animation:drift 24s ease-in-out infinite alternate}
+.aurora:after{right:-22vw;top:12vh;background:radial-gradient(circle,rgba(40,210,200,.3),transparent 65%);animation:drift 30s ease-in-out infinite alternate-reverse}
+:root[data-theme="light"] .aurora:before,:root[data-theme="light"] .aurora:after{opacity:.35}
+@keyframes drift{to{transform:translate(8vw,6vh) scale(1.12)}}
+#scrollbar{position:fixed;left:0;top:0;height:3px;width:0;z-index:100;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--pink));box-shadow:0 0 14px var(--accent)}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid var(--line)}
+.topinner{height:68px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--disp);font-weight:700;letter-spacing:-.03em;color:var(--ink);font-size:17px}.brand:hover{text-decoration:none}
+.brandmark{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#4466f0,#25c6c6);display:grid;place-items:center;color:#fff;font-weight:800;box-shadow:0 8px 22px rgba(68,102,240,.4),inset 0 1px 0 rgba(255,255,255,.35)}
+.brand small{display:block;font:700 10px/1 var(--mono);letter-spacing:.16em;color:var(--faint);margin-top:4px}
+.spacer{flex:1}
+.kbtn{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line2);background:var(--card);padding:9px 12px 9px 14px;border-radius:12px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:600;transition:.2s var(--ease);min-width:250px}
+.kbtn:hover{border-color:var(--accent);color:var(--ink);box-shadow:0 0 0 4px var(--glow)}
+.kbtn kbd{margin-left:auto;font:700 11px var(--mono);border:1px solid var(--line2);border-radius:6px;padding:2px 7px;color:var(--faint)}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line2);background:var(--card);color:var(--ink);padding:10px 15px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;transition:.25s var(--ease);position:relative}
+.btn:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 10px 26px var(--glow);text-decoration:none}
+.btn.primary{background:linear-gradient(110deg,#4a67f2,#2f8fe0 60%,#22b9c4);border:0;color:#fff;box-shadow:0 12px 28px rgba(60,100,240,.38)}
+.btn.primary:hover{box-shadow:0 16px 36px rgba(60,100,240,.5)}
+.btn.sm{padding:8px 12px;font-size:12px;border-radius:10px}
+.iconbtn{width:42px;height:42px;padding:0;justify-content:center;font-size:17px}
+
+/* hero */
+.hero{position:relative;padding:54px 0 18px}
+#heroCanvas{position:absolute;inset:0 0 auto 0;width:100%;height:100%;z-index:-1;opacity:.75;mask-image:linear-gradient(#000 55%,transparent);-webkit-mask-image:linear-gradient(#000 55%,transparent)}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line2);background:var(--card);border-radius:99px;padding:7px 14px 7px 11px;font:700 11px var(--mono);letter-spacing:.14em;color:var(--accent);backdrop-filter:blur(8px)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 0 0 var(--good);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.heroGrid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,.55fr);gap:30px;margin-top:20px;align-items:stretch}
+.hero h1{font-family:var(--disp);font-size:clamp(40px,5.6vw,78px);line-height:1;letter-spacing:-.06em;margin:16px 0 22px;font-weight:700}
+.grad{background:linear-gradient(100deg,var(--accent) 5%,var(--accent2) 55%,var(--pink) 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s linear infinite alternate}
+@keyframes shine{to{background-position:100% 0}}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:720px;margin:0}
+.heroActions{display:flex;gap:11px;flex-wrap:wrap;margin-top:28px}
+.heroCard{position:relative;border:1px solid var(--line2);border-radius:26px;padding:26px;background:linear-gradient(150deg,color-mix(in srgb,var(--solid) 92%,transparent),color-mix(in srgb,var(--bg2) 70%,transparent));box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;gap:18px;backdrop-filter:blur(14px)}
+.heroCard:before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:linear-gradient(140deg,var(--accent),transparent 35%,transparent 65%,var(--accent2));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.55;pointer-events:none}
+.miniLabel{font:700 11px var(--mono);letter-spacing:.14em;color:var(--faint);text-transform:uppercase}
+.mission{display:flex;align-items:center;gap:18px}
+.bigRing{width:116px;height:116px;flex:0 0 auto}
+.bigNum{font-family:var(--disp);font-size:54px;font-weight:700;letter-spacing:-.06em;line-height:1}
+.bigNum small{font-size:20px;color:var(--faint);letter-spacing:0;font-weight:500}
+.heroCard p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.65}
+.statline{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:auto}
+.stat{border:1px solid var(--line);border-radius:14px;padding:11px 12px;background:color-mix(in srgb,var(--solid) 55%,transparent)}
+.stat strong{display:block;font-family:var(--disp);font-size:24px;letter-spacing:-.04em;line-height:1.1}
+.stat span{font-size:11px;color:var(--muted)}
+
+.progressArea{margin-top:26px;border:1px solid var(--line2);border-radius:18px;padding:17px 22px;display:flex;align-items:center;gap:20px;background:var(--card);backdrop-filter:blur(12px)}
+.progressText{min-width:200px}.progressText strong{display:block;font-size:14px}.progressText span{font-size:12px;color:var(--muted)}
+.progressTrack{height:11px;border-radius:99px;background:color-mix(in srgb,var(--ink) 9%,transparent);flex:1;overflow:hidden;position:relative}
+.progressFill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--good));transition:width .7s var(--ease);position:relative}
+.progressFill:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:translateX(-100%);animation:sweep 2.6s infinite}
+@keyframes sweep{to{transform:translateX(100%)}}
+.progressPct{font:800 18px var(--disp);color:var(--accent);min-width:50px;text-align:right}
+
+.weekTrack{margin-top:14px;border:1px solid var(--line);border-radius:18px;padding:16px 20px 18px;background:var(--card);backdrop-filter:blur(12px)}
+.weekHead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+.weekHead span:last-child{font-size:12px;color:var(--faint)}
+.weeks{display:grid;grid-template-columns:repeat(24,1fr);gap:5px}
+.wk{position:relative;height:56px;border:1px solid var(--line);border-radius:9px;background:color-mix(in srgb,var(--g1) 10%,transparent);overflow:hidden;cursor:pointer;padding:0;transition:transform .25s var(--ease),border-color .2s}
+.wk:before{content:"";position:absolute;left:0;right:0;bottom:0;height:calc(var(--f,0)*100%);background:linear-gradient(0deg,var(--g1),var(--g2));opacity:.88;transition:height .8s var(--ease)}
+.wk span{position:relative;z-index:1;font:700 10px var(--mono);color:var(--muted);display:block;padding-top:6px;mix-blend-mode:normal}
+.wk:hover{transform:translateY(-4px);border-color:var(--g1)}
+.wk.pstart{margin-left:3px}
+.weekLegend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:11px}
+.weekLegend button{display:inline-flex;align-items:center;gap:7px;border:0;background:none;cursor:pointer;font-size:11.5px;color:var(--muted);padding:2px 0;font-weight:600}
+.weekLegend button:hover{color:var(--ink)}
+.weekLegend i{width:10px;height:10px;border-radius:3px;background:linear-gradient(135deg,var(--g1),var(--g2))}
+
+.cadenceBar{display:flex;align-items:center;gap:18px;margin-top:14px;padding:17px 22px;border:1px solid var(--line);border-radius:18px;background:var(--card);backdrop-filter:blur(12px)}
+.cadenceIntro{min-width:210px;display:flex;flex-direction:column;gap:3px}
+.cadenceKicker{font:700 10px var(--mono);letter-spacing:.16em;color:var(--accent2)}
+.cadenceIntro strong{font-family:var(--disp);font-size:17px;letter-spacing:-.02em}
+.cadenceStep{display:flex;align-items:center;gap:11px}
+.cadenceStep b{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font:800 11px var(--mono);color:#06101f;background:linear-gradient(135deg,#86a6ff,#4de8d4)}
+.cadenceStep span{font-size:14px;font-weight:800;display:block;line-height:1.2}
+.cadenceStep small{font-size:11.5px;color:var(--muted);display:block}
+.cadenceBar>i{font-style:normal;color:var(--accent2);font-size:20px}
+
+/* app layout */
+.app{display:grid;grid-template-columns:268px minmax(0,1fr);gap:30px;padding-top:30px;padding-bottom:70px;align-items:start}
+.side{position:sticky;top:88px;display:flex;flex-direction:column;gap:14px;max-height:calc(100vh - 104px);overflow:auto;scrollbar-width:none}
+.side::-webkit-scrollbar{display:none}
+.panel{border:1px solid var(--line);border-radius:18px;background:var(--card);backdrop-filter:blur(14px);padding:10px}
+.navitem{display:flex;align-items:center;gap:12px;width:100%;border:0;background:none;text-align:left;padding:11px 12px;border-radius:12px;cursor:pointer;font-weight:700;font-size:14px;color:var(--muted);transition:.2s var(--ease);position:relative}
+.navitem .ni{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:color-mix(in srgb,var(--ink) 7%,transparent);font-size:14px;transition:.2s}
+.navitem:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.navitem.active{color:var(--ink);background:linear-gradient(100deg,color-mix(in srgb,var(--accent) 22%,transparent),color-mix(in srgb,var(--accent2) 10%,transparent))}
+.navitem.active .ni{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#07101f}
+.sideLabel{font:700 10px var(--mono);letter-spacing:.16em;color:var(--faint);padding:6px 12px 4px}
+.sp{display:flex;align-items:center;gap:11px;width:100%;border:0;background:none;text-align:left;padding:8px 10px;border-radius:12px;cursor:pointer;transition:.2s}
+.sp:hover{background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.sp.active{background:color-mix(in srgb,var(--g1) 14%,transparent)}
+.sp b{display:block;font-size:13px;line-height:1.25;font-weight:700}.sp small{font-size:11px;color:var(--faint)}
+.mring{width:34px;height:34px;flex:0 0 auto}
+.rb{fill:none;stroke:color-mix(in srgb,var(--ink) 11%,transparent)}
+.rf{fill:none;stroke-linecap:round;transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset .9s var(--ease)}
+.rt{font:800 11px var(--mono);fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+.nextCard{border:1px solid var(--line2);border-radius:18px;padding:15px;background:linear-gradient(150deg,color-mix(in srgb,var(--accent) 16%,transparent),color-mix(in srgb,var(--accent2) 8%,transparent))}
+.nextCard .miniLabel{color:var(--accent)}
+.nextCard b{display:block;font-size:14px;line-height:1.35;margin:6px 0 11px}
+
+.stage{min-width:0}
+.view{display:none}.view.active{display:block;animation:viewIn .5s var(--ease)}
+@keyframes viewIn{from{opacity:0;transform:translateY(14px)}}
+.sectionHead{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin:0 0 22px}
+.smallcaps{font:700 11px var(--mono);letter-spacing:.16em;color:var(--accent);text-transform:uppercase;margin-bottom:8px}
+.sectionHead h2{margin:0;font-family:var(--disp);font-size:clamp(26px,3.2vw,38px);line-height:1.12;letter-spacing:-.04em}
+.sectionHead p{margin:10px 0 0;color:var(--muted);font-size:15px;line-height:1.75;max-width:760px}
+.sheetControls{display:flex;gap:8px;flex-shrink:0}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.filterRow{display:flex;gap:7px;flex-wrap:wrap}
+.filterBtn{border:1px solid var(--line2);background:var(--card);border-radius:99px;padding:8px 14px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:.2s var(--ease)}
+.filterBtn:hover{color:var(--ink);border-color:var(--accent)}
+.filterBtn.active{background:linear-gradient(110deg,var(--accent),var(--accent2));border-color:transparent;color:#06101f}
+.searchBar{display:flex;align-items:center;gap:10px;flex:1;min-width:230px;border:1px solid var(--line2);border-radius:13px;padding:0 14px;background:var(--card);transition:.2s}
+.searchBar:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px var(--glow)}
+.searchBar input{border:0;outline:0;background:transparent;width:100%;padding:12px 0;font:inherit;font-size:14px;color:var(--ink)}
+.searchBar span{color:var(--faint)}
+.empty{display:none;text-align:center;padding:36px;border:1px dashed var(--line2);border-radius:18px;color:var(--muted)}
+
+/* spotlight */
+.spot{position:relative}
+.spot:after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),var(--glow),transparent 60%)}
+.spot:hover:after{opacity:1}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}.rv.in{opacity:1;transform:none}
+
+/* phases */
+.phaseGrid{display:flex;flex-direction:column;gap:16px}
+.phase{border:1px solid var(--line);border-radius:22px;background:var(--card);backdrop-filter:blur(14px);overflow:hidden;position:relative;transition:border-color .3s,box-shadow .4s,transform .4s var(--ease)}
+.phase:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(var(--g1),var(--g2));opacity:.85;z-index:2}
+.phase:hover{border-color:var(--line2);transform:translateY(-2px)}
+.phase.open{border-color:color-mix(in srgb,var(--g1) 55%,transparent);box-shadow:0 22px 60px color-mix(in srgb,var(--g1) 14%,transparent);transform:none}
+.phead{display:grid;grid-template-columns:76px minmax(0,1fr) auto;gap:20px;padding:24px 26px 24px 30px;cursor:pointer;align-items:start;position:relative;z-index:1}
+.pnum{font:700 54px/1 var(--disp);letter-spacing:-.07em;background:linear-gradient(160deg,var(--g1),var(--g2));-webkit-background-clip:text;background-clip:text;color:transparent;padding-top:2px}
+.pkicker{font:700 11px var(--mono);letter-spacing:.14em;color:var(--g1);text-transform:uppercase}
+.phead h3{margin:6px 0 8px;font-family:var(--disp);font-size:clamp(21px,2.4vw,27px);letter-spacing:-.04em;line-height:1.2}
+.phead p{margin:0;color:var(--muted);font-size:15px;line-height:1.7;max-width:780px}
+.pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+.pill{display:inline-flex;align-items:center;border:1px solid var(--line2);border-radius:99px;padding:5px 11px;font-size:12px;font-weight:600;color:var(--muted);background:color-mix(in srgb,var(--solid) 45%,transparent)}
+.pill.blue{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 40%,transparent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.pill.green{color:var(--good);border-color:color-mix(in srgb,var(--good) 40%,transparent);background:var(--goodbg)}
+.pright{display:flex;flex-direction:column;align-items:center;gap:12px}
+.pring{width:62px;height:62px}
+.chev{width:30px;height:30px;border:1px solid var(--line2);border-radius:10px;display:grid;place-items:center;transition:.35s var(--ease);color:var(--muted);font-size:14px}
+.phase.open .chev{transform:rotate(180deg);background:var(--g1);color:#06101f;border-color:transparent}
+.pbody{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--ease)}
+.phase.open .pbody{grid-template-rows:1fr}
+.pbody>div{overflow:hidden;min-height:0}
+.pin{padding:6px 30px 30px 30px;border-top:1px solid var(--line);background:color-mix(in srgb,var(--bg) 40%,transparent)}
+.phaseIntro{margin:22px 0 4px;padding:17px 20px;border-radius:15px;font-size:15px;line-height:1.75;border:1px solid color-mix(in srgb,var(--g1) 30%,transparent);background:linear-gradient(110deg,color-mix(in srgb,var(--g1) 12%,transparent),color-mix(in srgb,var(--g2) 7%,transparent))}
+.phaseIntro strong{color:var(--g1)}
+.dsec{margin:28px 0 0}
+.dsec h4{display:flex;align-items:center;gap:12px;font-family:var(--disp);font-size:18px;letter-spacing:-.02em;margin:0 0 6px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.dsec h4:before{content:"";width:5px;height:22px;border-radius:5px;background:linear-gradient(var(--g1),var(--g2))}
+.dsec h4 em{margin-left:auto;font:700 11px var(--mono);color:var(--faint);font-style:normal}
+.topic{display:flex;align-items:flex-start;gap:16px;padding:17px 12px;border-bottom:1px solid var(--line);cursor:pointer;border-radius:12px;transition:background .2s,opacity .3s;position:relative}
+.topic:hover{background:color-mix(in srgb,var(--g1) 8%,transparent)}
+.topic.hide,.dsec.hide,.phase.hide{display:none}
+.chk{position:relative;flex:0 0 auto;width:24px;height:24px;margin-top:2px}
+.chk input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0;z-index:2}
+.chk i{position:absolute;inset:0;border-radius:8px;border:2px solid var(--line2);background:color-mix(in srgb,var(--solid) 60%,transparent);transition:.3s var(--ease)}
+.chk i:after{content:"";position:absolute;left:7px;top:2px;width:6px;height:12px;border:solid #06101f;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) scale(0);transition:transform .3s var(--ease) .05s}
+.chk input:checked+i{background:linear-gradient(135deg,var(--g1),var(--g2));border-color:transparent;box-shadow:0 0 0 5px color-mix(in srgb,var(--g1) 18%,transparent)}
+.chk input:checked+i:after{transform:rotate(45deg) scale(1)}
+.chk input:focus-visible+i{outline:2px solid var(--accent);outline-offset:3px}
+.tbody b{display:block;font-size:16px;line-height:1.45;letter-spacing:-.01em;font-weight:700;transition:.3s}
+.tbody span{display:block;font-size:15px;line-height:1.8;color:var(--muted);margin-top:5px;max-width:960px;transition:.3s}
+.topic.done{background:var(--goodbg)}
+.topic.done .tbody b{color:var(--good);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--good) 50%,transparent)}
+.topic.done .tbody span{opacity:.62}
+.topic.flash{animation:flash 2s var(--ease)}
+@keyframes flash{0%,35%{background:color-mix(in srgb,var(--accent) 28%,transparent);box-shadow:0 0 0 2px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
+.gate{margin-top:24px;border-radius:16px;padding:18px 20px 18px 56px;position:relative;border:1px solid color-mix(in srgb,var(--good) 40%,transparent);background:linear-gradient(110deg,var(--goodbg),transparent)}
+.gate:before{content:"⚑";position:absolute;left:19px;top:16px;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:var(--good);color:#06101f;font-size:14px}
+.gate strong{display:block;font:700 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--good);margin-bottom:5px}
+.gate p{margin:0;font-size:14.5px;line-height:1.75;color:var(--muted)}
+.resourceChips{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+.resourceChip{border:1px solid var(--line2);border-radius:11px;padding:9px 13px;font-size:13px;font-weight:600;color:var(--muted);background:color-mix(in srgb,var(--solid) 55%,transparent)}
+.practice{margin-top:14px}
+
+/* cases */
+.caseGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.caseCard{border:1px solid var(--line);border-radius:18px;padding:19px;background:var(--card);display:flex;flex-direction:column;min-height:196px;backdrop-filter:blur(12px);transition:.3s var(--ease);position:relative;overflow:hidden}
+.caseCard:hover{transform:translateY(-4px);border-color:var(--line2);box-shadow:var(--shadow)}
+.caseCard:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g1),var(--g2))}
+.caseCard.done{border-color:color-mix(in srgb,var(--good) 45%,transparent);background:linear-gradient(160deg,var(--goodbg),var(--card))}
+.caseTop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.caseNum{font:700 10.5px/1.5 var(--mono);letter-spacing:.1em;color:var(--g1);text-transform:uppercase}
+.caseTick{width:30px;height:30px;border-radius:10px;border:1.5px solid var(--line2);background:transparent;cursor:pointer;display:grid;place-items:center;font-size:14px;color:transparent;transition:.3s var(--ease);flex:0 0 auto}
+.caseTick:hover{border-color:var(--good)}
+.caseCard.done .caseTick{background:var(--good);border-color:transparent;color:#06101f;transform:rotate(360deg)}
+.caseCard h3{font-family:var(--disp);font-size:18px;line-height:1.3;margin:10px 0 8px;letter-spacing:-.025em}
+.caseCard p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.7}
+.caseFoot{margin-top:auto;padding-top:16px;font-size:11.5px;font-weight:700;color:var(--faint);cursor:pointer;background:none;border:0;text-align:left}
+.caseFoot:hover{color:var(--accent)}
+.caseCount{font:700 12px var(--mono);color:var(--muted);margin-left:auto}
+
+/* mind maps */
+.mindLayout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px}
+.mindNav{display:flex;flex-direction:column;gap:4px}
+.mindNav button{border:0;background:none;text-align:left;padding:12px 14px;border-radius:11px;cursor:pointer;font-weight:700;font-size:13.5px;color:var(--muted);transition:.2s}
+.mindNav button:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.mindNav button.active{background:linear-gradient(100deg,color-mix(in srgb,var(--accent) 22%,transparent),transparent);color:var(--ink)}
+.mindCanvas{border:1px solid var(--line);border-radius:22px;background:var(--card);padding:22px;backdrop-filter:blur(12px)}
+.mmTools{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.mm{position:relative;height:500px}
+.mm svg{position:absolute;inset:0;width:100%;height:100%}
+.mm line{stroke:var(--line2);stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-dasharray:4 5;transition:.3s}
+.mm line.on{stroke:var(--accent);stroke-width:2.5;animation:dash 1s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-18}}
+.mmRoot{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;padding:16px 24px;border-radius:18px;background:linear-gradient(135deg,#3f5de8,#1fb0bd);color:#fff;font:700 15px var(--disp);letter-spacing:.04em;text-align:center;box-shadow:0 0 0 10px color-mix(in srgb,var(--accent) 12%,transparent),0 0 0 22px color-mix(in srgb,var(--accent) 6%,transparent),0 18px 40px rgba(50,90,230,.4);animation:breathe 4s ease-in-out infinite}
+@keyframes breathe{50%{box-shadow:0 0 0 14px color-mix(in srgb,var(--accent) 14%,transparent),0 0 0 30px color-mix(in srgb,var(--accent) 5%,transparent),0 18px 40px rgba(50,90,230,.4)}}
+.mmNode{position:absolute;transform:translate(-50%,-50%);width:min(210px,26%);z-index:3;text-align:left;border:1px solid var(--line2);border-radius:15px;background:var(--solid);padding:12px 14px;cursor:pointer;transition:.3s var(--ease);box-shadow:0 8px 24px rgba(0,0,0,.14)}
+.mmNode:hover{transform:translate(-50%,-50%) scale(1.06);border-color:var(--accent)}
+.mmNode.active{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 16%,var(--solid));box-shadow:0 0 0 4px var(--glow),0 14px 36px rgba(0,0,0,.25);transform:translate(-50%,-50%) scale(1.07)}
+.mmNode b{display:block;font-size:14px;margin-bottom:3px}
+.mmNode small{display:block;font-size:11px;line-height:1.45;color:var(--muted)}
+.mindDetail{margin-top:8px;padding:20px 22px;border-radius:16px;border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);background:linear-gradient(110deg,color-mix(in srgb,var(--accent) 12%,transparent),transparent)}
+.mindDetail h3{margin:0 0 8px;font-family:var(--disp);font-size:20px}
+.mindDetail p{margin:0 0 12px;color:var(--muted);font-size:15px;line-height:1.75}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chips span{border:1px solid var(--line2);border-radius:99px;padding:5px 12px;font-size:12px;font-weight:700;color:var(--ink);background:color-mix(in srgb,var(--solid) 55%,transparent)}
+
+/* interview */
+.ivGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.infoCard{border:1px solid var(--line);border-radius:20px;padding:22px;background:var(--card);backdrop-filter:blur(12px)}
+.infoCard.wide{grid-column:1/-1}
+.infoCard h3{margin:0 0 14px;font-family:var(--disp);font-size:19px;letter-spacing:-.02em}
+.timeRow{display:grid;grid-template-columns:78px 1fr;gap:14px;padding:13px 10px;border-top:1px solid var(--line);border-radius:10px;transition:.3s}
+.timeRow:first-of-type{border-top:0}
+.timeRow.cur{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 20%,transparent),transparent);box-shadow:inset 3px 0 0 var(--accent)}
+.timeRow.past{opacity:.45}
+.time{font:700 12px var(--mono);color:var(--accent)}
+.timeRow p{margin:0;font-size:14px;color:var(--muted);line-height:1.7}
+.timeRow p strong{color:var(--ink)}
+.bulletList{padding-left:20px;margin:8px 0;color:var(--muted);font-size:14px;line-height:1.7}.bulletList li{padding:3px 0}.bulletList strong{color:var(--ink)}
+.timer{display:flex;flex-direction:column;gap:16px}
+.tmTop{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.tmClock{font:700 clamp(46px,7vw,72px)/1 var(--disp);letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.tmStep{display:flex;flex-direction:column;gap:3px}
+.tmStep b{font-size:18px;font-family:var(--disp)}.tmStep span{font-size:13px;color:var(--muted)}
+.tmCtl{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+.seg{display:flex;gap:4px;height:34px}
+.seg div{position:relative;border-radius:9px;background:color-mix(in srgb,var(--ink) 9%,transparent);overflow:hidden;display:grid;place-items:center;font:700 10px var(--mono);color:var(--muted);min-width:0;white-space:nowrap}
+.seg div i{position:absolute;inset:0;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.9}
+.seg div span{position:relative;z-index:1;mix-blend-mode:normal;padding:0 4px;overflow:hidden;text-overflow:ellipsis}
+.seg div.cur{box-shadow:0 0 0 2px var(--accent)}
+.calc{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.calc label{display:flex;flex-direction:column;gap:5px;font-size:11.5px;font-weight:700;color:var(--muted)}
+.calc input{border:1px solid var(--line2);border-radius:10px;background:color-mix(in srgb,var(--solid) 70%,transparent);color:var(--ink);padding:10px 11px;font:600 14px var(--mono);width:100%}
+.calc input:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
+.calcOut{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.out{border:1px solid var(--line);border-radius:13px;padding:12px;background:linear-gradient(150deg,color-mix(in srgb,var(--accent) 10%,transparent),transparent)}
+.out small{display:block;font-size:11px;color:var(--muted)}.out strong{font:700 20px var(--disp);letter-spacing:-.03em}
+.rubricRow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--line);font-size:14px}
+.stars{display:flex;gap:4px}
+.star{border:1px solid var(--line2);background:transparent;color:var(--faint);border-radius:9px;width:34px;height:34px;cursor:pointer;font:700 13px var(--mono);transition:.2s var(--ease)}
+.star:hover{transform:translateY(-2px);border-color:var(--amber)}
+.star.active{background:linear-gradient(135deg,#ffcf7a,#ffa14f);border-color:transparent;color:#2b1a02}
+.avg{display:flex;align-items:center;justify-content:space-between;margin-top:6px;padding:12px 14px;border-radius:12px;background:color-mix(in srgb,var(--ink) 6%,transparent);font-size:13px;font-weight:700}
+.avg strong{font:800 22px var(--disp)}.avg.ok{background:var(--goodbg);color:var(--good)}
+.muted{color:var(--muted)}
+
+/* resources */
+.resourceGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.resourceCard{border:1px solid var(--line);border-radius:18px;padding:20px;background:var(--card);backdrop-filter:blur(12px);display:flex;flex-direction:column;transition:.3s var(--ease)}
+.resourceCard:hover{transform:translateY(-4px);border-color:var(--line2);box-shadow:var(--shadow)}
+.resourceCard h3{font-family:var(--disp);font-size:17px;line-height:1.3;margin:12px 0 4px;letter-spacing:-.02em}
+.resourceCard em{font-style:normal;font-size:12.5px;font-weight:700;color:var(--accent)}
+.resourceCard p{font-size:13.5px;color:var(--muted);line-height:1.7;margin:8px 0 16px}
+.resourceCard a{margin-top:auto;font-size:13px;font-weight:800}
+
+.footer{border-top:1px solid var(--line);padding:30px 0 40px;background:color-mix(in srgb,var(--bg) 70%,transparent)}
+.footerInner{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.watermark{font:800 20px var(--disp);letter-spacing:-.04em;color:var(--ink)}.watermark span{color:var(--accent)}
+.tagline{font-size:12.5px;color:var(--muted);margin-top:3px}.footerNote{font-size:11.5px;color:var(--faint)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,16px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:13px;font-size:13px;font-weight:700;box-shadow:var(--shadow);opacity:0;transition:.35s var(--ease);pointer-events:none;z-index:300}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:250}
+
+/* palette */
+.pal{position:fixed;inset:0;z-index:200;display:none;align-items:flex-start;justify-content:center;padding:12vh 16px 0}
+.pal.show{display:flex}
+.palBack{position:absolute;inset:0;background:rgba(3,6,14,.6);backdrop-filter:blur(7px);animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.palBox{position:relative;width:min(680px,100%);border:1px solid var(--line2);border-radius:20px;background:var(--solid);box-shadow:0 40px 100px rgba(0,0,0,.5);overflow:hidden;animation:pop .3s var(--ease)}
+@keyframes pop{from{opacity:0;transform:translateY(-14px) scale(.97)}}
+.palBox input{width:100%;border:0;border-bottom:1px solid var(--line);outline:0;background:transparent;color:var(--ink);font:inherit;font-size:17px;padding:19px 22px}
+.palList{max-height:min(54vh,430px);overflow:auto;padding:8px}
+.palItem{display:flex;align-items:center;gap:13px;padding:11px 13px;border-radius:12px;cursor:pointer}
+.palItem.sel{background:linear-gradient(100deg,color-mix(in srgb,var(--accent) 24%,transparent),color-mix(in srgb,var(--accent2) 8%,transparent))}
+.palItem .pi{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:color-mix(in srgb,var(--ink) 8%,transparent);font-size:14px;flex:0 0 auto}
+.palItem b{display:block;font-size:14px;line-height:1.3}.palItem small{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:480px}
+.palItem .tag{margin-left:auto;font:700 10px var(--mono);letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
+.palFoot{display:flex;gap:16px;padding:11px 18px;border-top:1px solid var(--line);font:600 11px var(--mono);color:var(--faint)}
+.palNone{padding:30px;text-align:center;color:var(--muted);font-size:14px}
+
+.bottomnav{display:none}
+
+@media(max-width:1100px){.app{grid-template-columns:1fr}.side{display:none}.bottomnav{display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:60;border:1px solid var(--line2);border-radius:20px;background:color-mix(in srgb,var(--solid) 88%,transparent);backdrop-filter:blur(18px);padding:6px;box-shadow:var(--shadow)}.bottomnav button{flex:1;border:0;background:none;border-radius:14px;padding:8px 2px;font-size:10.5px;font-weight:700;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}.bottomnav button span{font-size:17px}.bottomnav button.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#06101f}.app{padding-bottom:110px}.caseGrid,.resourceGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.heroGrid{grid-template-columns:1fr}.mindLayout{grid-template-columns:1fr}.mindNav{flex-direction:row;overflow:auto}.mindNav button{white-space:nowrap}.toast{bottom:96px}}
+@media(max-width:820px){.ivGrid{grid-template-columns:1fr}.calcOut{grid-template-columns:repeat(2,1fr)}.cadenceBar{flex-wrap:wrap}.cadenceBar>i{display:none}.cadenceIntro{flex-basis:100%}.kbtn{min-width:0}.kbtn .kl{display:none}.weeks{grid-template-columns:repeat(12,1fr)}.sectionHead{flex-direction:column;align-items:flex-start}.mm{height:auto}.mm svg,.mmRoot{display:none}.mm{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mmNode{position:static;transform:none!important;width:auto}}
+@media(max-width:650px){.shell{padding:0 16px}.brand small{display:none}.caseGrid,.resourceGrid,.calc{grid-template-columns:1fr}.phead{grid-template-columns:1fr auto;padding:18px 16px 18px 20px}.pnum{display:none}.pin{padding:4px 16px 22px}.topic{padding:15px 4px}.tbody span,.phead p{font-size:14px}.progressArea{flex-wrap:wrap;gap:12px}.progressTrack{order:3;flex-basis:100%}.progressText{min-width:0;flex:1}.mm{grid-template-columns:1fr}.hero{padding-top:34px}.mission{flex-direction:column;align-items:flex-start}.topbar .btn.pr{display:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}html{scroll-behavior:auto}.rv{opacity:1;transform:none}}
+@media print{.topbar,.side,.bottomnav,.heroActions,.btn,.toolbar,.toast,#heroCanvas,.aurora,#scrollbar,.pal,#confetti,.weekTrack{display:none!important}body{background:#fff;color:#000}.app{display:block}.view{display:block!important}.pbody{grid-template-rows:1fr!important}.phase,.infoCard,.caseCard{break-inside:avoid;background:#fff}.rv{opacity:1;transform:none}}
+</style></head><body>
+<div id="scrollbar"></div><div class="aurora"></div>
+<header class="topbar"><div class="shell topinner">
+<a class="brand" href="#top" aria-label="Back to top"><span class="brandmark">SD</span><span>System Design <span style="color:var(--faint)">×</span> AI/ML<small>THE MASTER ROADMAP</small></span></a>
+<span class="spacer"></span>
+<button class="kbtn" id="openPalette" type="button" aria-label="Search the roadmap"><span>⌕</span><span class="kl">Search topics, cases, resources…</span><kbd id="kbdHint">Ctrl K</kbd></button>
+<button class="btn iconbtn" id="themeToggle" type="button" aria-label="Switch color theme">☀️</button>
+</div></header>
+
+<section class="shell hero" id="top"><canvas id="heroCanvas"></canvas>
+<span class="eyebrow"><span class="dot"></span> 24-WEEK ENGINEERING PLAN</span>
+<div class="heroGrid"><div>
+<h1>Think in systems.<br><span class="grad">Design for scale.</span></h1>
+<p class="lead">A hands-on path from networking and low-level design to distributed systems, production architecture, and AI/ML infrastructure. Learn a concept, design with it, then prove you understand it.</p>
+<div class="heroActions"><button class="btn primary" id="heroExplore">Explore the roadmap ↗</button><button class="btn" id="continueBtn">▶ Start learning</button><button class="btn pr" onclick="window.print()">Export / print</button><button class="btn" id="resetProgress">Reset progress</button></div>
+</div>
+<aside class="heroCard spot"><div class="miniLabel">Your mission</div>
+<div class="mission"><svg class="bigRing" viewBox="0 0 120 120"><defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c9cff"/><stop offset="1" stop-color="#4de8d4"/></linearGradient></defs><circle class="rb" cx="60" cy="60" r="52" stroke-width="9"/><circle class="rf" id="heroRing" cx="60" cy="60" r="52" stroke-width="9" stroke="url(#hg)"/><text class="rt" x="60" y="60" id="heroRingTxt" style="font-size:22px">0%</text></svg>
+<div><div class="bigNum">24 <small>weeks</small></div></div></div>
+<p>Build the judgment to explain not only what a system looks like, but why it works, where it breaks, and what it costs.</p>
+<div class="statline"><div class="stat"><strong data-count="240" data-pre="~" data-suf="h">~240h</strong><span>planned effort</span></div><div class="stat"><strong data-count="10">10</strong><span>production designs</span></div><div class="stat"><strong data-count="7">7</strong><span>ML case studies</span></div></div>
+</aside></div>
+<div class="progressArea"><div class="progressText"><strong>Roadmap completion</strong><span id="progressCount">0 of 0 topics checked</span></div><div class="progressTrack"><div class="progressFill" id="progressFill"></div></div><div class="progressPct" id="progressPct">0%</div></div>
+<div class="weekTrack"><div class="weekHead"><span class="miniLabel">The 24-week track</span><span>Fills as you check off topics · click a week to jump to its phase</span></div><div class="weeks" id="weeks"></div><div class="weekLegend" id="weekLegend"></div></div>
+<div class="cadenceBar" aria-label="Weekly study rhythm"><div class="cadenceIntro"><span class="cadenceKicker">THE EXECUTION LOOP</span><strong>Learn it. Build it. Defend it.</strong></div><div class="cadenceStep"><b>01</b><div><span>Learn</span><small>4 hours / week</small></div></div><i>→</i><div class="cadenceStep"><b>02</b><div><span>Design from blank page</span><small>4 hours / week</small></div></div><i>→</i><div class="cadenceStep"><b>03</b><div><span>Mock + review</span><small>2 hours / week</small></div></div></div>
+</section>
+
+<div class="shell app" id="appTop">
+<aside class="side">
+<div class="panel" id="sideNav">
+<button class="navitem active" data-view="roadmap"><span class="ni">✦</span>Main roadmap</button>
+<button class="navitem" data-view="mindmaps"><span class="ni">⌘</span>Mind maps</button>
+<button class="navitem" data-view="cases"><span class="ni">▦</span>Case studies</button>
+<button class="navitem" data-view="interview"><span class="ni">◷</span>Interview lab</button>
+<button class="navitem" data-view="resources"><span class="ni">↗</span>Resources</button>
+</div>
+<div class="nextCard" id="nextCard"><div class="miniLabel">Up next</div><b id="nextTitle">—</b><button class="btn sm primary" id="nextGo">Jump to it →</button></div>
+<div class="panel"><div class="sideLabel">PHASES</div><div id="sidePhases"></div></div>
+</aside>
+<main class="stage">
+<section class="view active" data-panel="roadmap" id="roadmapView">
+<div class="sectionHead"><div><div class="smallcaps">THE MAIN SHEET · 24 WEEKS</div><h2>Learn in sequence. Check off as you master it.</h2><p>Every phase is in one continuous vertical sheet. The headline syllabus stays visible for scanning; open a phase to see the full topic notes, hands-on work, resources and its completion gate. Tick topics here as you finish them—there is no separate to-do list.</p></div><div class="sheetControls"><button class="btn sm" id="expandAll">Open all phases</button><button class="btn sm" id="collapseAll">Close all phases</button></div></div>
+<div class="toolbar"><div class="filterRow" id="phaseFilters"><button class="filterBtn active" data-filter="all">All phases</button><button class="filterBtn" data-filter="foundations">Foundations</button><button class="filterBtn" data-filter="hld">System design</button><button class="filterBtn" data-filter="distributed">Distributed systems</button><button class="filterBtn" data-filter="ml">AI / ML</button><button class="filterBtn" data-filter="interview">Interview prep</button></div></div>
+<div class="searchBar"><span>⌕</span><input id="topicSearch" placeholder="Find a topic: caching, Raft, RAG, sharding…" aria-label="Search roadmap"></div>
+<div style="height:18px"></div>
+<div class="phaseGrid" id="phaseGrid"></div><div class="empty" id="noResults">No matching topics. Try another search.</div>
+</section>
+<section class="view" data-panel="mindmaps" id="mindmapsView">
+<div class="sectionHead"><div><div class="smallcaps">Connect the concepts</div><h2>Interactive mind maps</h2><p>Choose a branch to see the concepts that belong together. Use these as a quick mental model before attempting a system design.</p></div></div>
+<div class="mindLayout"><div class="panel mindNav" id="mindNav"><button class="active" data-map="system">System design</button><button data-map="distributed">Distributed systems</button><button data-map="ml">AI/ML architecture</button><button data-map="interview">Interview flow</button></div><div class="mindCanvas" id="mindCanvas"></div></div>
+</section>
+<section class="view" data-panel="cases" id="casesView">
+<div class="sectionHead"><div><div class="smallcaps">Practice by designing</div><h2>Case-study library</h2><p>Every case study should cover requirements, estimates, API/data model, architecture, bottlenecks, failure paths, monitoring, and trade-offs—not just boxes and arrows.</p></div></div>
+<div class="toolbar"><div class="filterRow" id="caseFilters"><button class="filterBtn active" data-casefilter="all">All designs</button><button class="filterBtn" data-casefilter="building">Building blocks</button><button class="filterBtn" data-casefilter="production">Production systems</button><button class="filterBtn" data-casefilter="ml">AI / ML systems</button></div><span class="caseCount" id="caseCount"></span></div>
+<div class="caseGrid" id="caseGrid"></div>
+</section>
+<section class="view" data-panel="interview" id="interviewView">
+<div class="sectionHead"><div><div class="smallcaps">Practice under pressure</div><h2>Interview lab</h2><p>Use the same repeatable structure every time. Your goal is a clear, defensible design with explicit assumptions, alternatives, and failure handling.</p></div></div>
+<div class="ivGrid">
+<article class="infoCard wide"><h3>Mock interview timer</h3><div class="timer"><div class="tmTop"><div class="tmClock" id="tmClock">45:00</div><div class="tmStep"><b id="tmName">Ready when you are</b><span id="tmSub">Suggested pacing: the upper end of each range below, totalling 45 min.</span></div><div class="tmCtl"><button class="btn primary" id="tmStart">▶ Start</button><button class="btn" id="tmNext">Skip step ⏭</button><button class="btn" id="tmReset">Reset</button></div></div><div class="seg" id="tmSeg"></div></div></article>
+<article class="infoCard"><h3>45-minute design framework</h3><div id="framework"></div></article>
+<article class="infoCard"><h3>Estimation cheat sheet</h3><ul class="bulletList"><li>One day ≈ 86,400 seconds; use <strong>10⁵</strong> for quick math.</li><li>10 million requests/day ≈ <strong>100 QPS average</strong>; plan for a peak of 2–5× average.</li><li>1 million writes/day at 1 KB ≈ <strong>1 GB/day</strong> or 365 GB/year before replication.</li><li>Multiply stored data by the replication factor (commonly 3).</li><li>Latency anchors: RAM ≈ 100 ns; NVMe read ≈ 100 µs; same-datacenter round trip ≈ 0.5 ms; cross-continent ≈ 100–150 ms.</li></ul><h3 style="margin-top:22px">Common mistakes to eliminate</h3><ul class="bulletList"><li>Jumping to boxes before clarifying requirements.</li><li>Naming technologies without explaining why.</li><li>Ignoring the write path or failure path.</li><li>Claiming exactly-once or strong consistency without discussing cost.</li><li>Spending 30 minutes on the high-level diagram and leaving no time for depth.</li></ul></article>
+<article class="infoCard wide"><h3>Back-of-envelope calculator</h3><div class="calc"><label>Requests / day<input id="cReq" type="number" value="10000000" min="0"></label><label>Peak factor (×)<input id="cPeak" type="number" value="3" min="1" step="0.5"></label><label>Writes / day<input id="cWr" type="number" value="1000000" min="0"></label><label>Record size (KB)<input id="cKb" type="number" value="1" min="0" step="0.1"></label><label>Replication factor<input id="cRep" type="number" value="3" min="1"></label><label>Years retained<input id="cYr" type="number" value="1" min="1"></label></div><div class="calcOut" id="calcOut"></div></article>
+<article class="infoCard"><h3>Score your mock (1–5)</h3><p class="muted" style="font-size:12.5px;margin-top:-6px">Your ratings are saved in this browser.</p><div id="rubric"></div><div class="avg" id="avg"><span>Average</span><strong>—</strong></div><div class="gate"><strong>Target: 4/5 or higher</strong><p>Aim for six mocks at 4+ and repeat your exit criteria successfully for two consecutive weeks.</p></div></article>
+<article class="infoCard"><h3>Mock schedule</h3><div class="timeRow"><div class="time">Weeks 5–10</div><p>One building-block design each week. Use a peer mock or record yourself.</p></div><div class="timeRow"><div class="time">Weeks 11–18</div><p>One case study each week with a failure-handling deep dive. Get written feedback.</p></div><div class="timeRow"><div class="time">Weeks 19–22</div><p>One AI/ML design each week, using the ML design template.</p></div><div class="timeRow"><div class="time">Weeks 23–24</div><p>Three full mock loops: two general and one company-specific. Include behavioral stories and the role-relevant system-design round.</p></div></article>
+</div>
+</section>
+<section class="view" data-panel="resources" id="resourcesView">
+<div class="sectionHead"><div><div class="smallcaps">Read with a purpose</div><h2>Resource shelf</h2><p>Use books to build the mental model, then return to the roadmap and prove it with a blank-page design. Optional advanced material is deliberately separated.</p></div></div>
+<div class="toolbar"><div class="filterRow" id="resFilters"></div></div>
+<div class="resourceGrid" id="resourceGrid"></div>
+<div class="infoCard" style="margin-top:16px"><h3>Habits that beat passive reading</h3><ul class="bulletList"><li>Redraw each design from memory one week later.</li><li>Keep a mistake log from every mock.</li><li>Explain one concept aloud each day as if teaching it.</li><li>Use optional items only after the core phase is stable; if you fall more than two weeks behind, skip optional topics.</li></ul></div>
+</section>
+</main></div>
+<nav class="bottomnav" id="bottomNav"><button class="active" data-view="roadmap"><span>✦</span>Roadmap</button><button data-view="mindmaps"><span>⌘</span>Maps</button><button data-view="cases"><span>▦</span>Cases</button><button data-view="interview"><span>◷</span>Interview</button><button data-view="resources"><span>↗</span>Resources</button></nav>
+<footer class="footer"><div class="shell footerInner"><div><a class="watermark" href="https://github.com/bytebymanas" target="_blank" rel="noopener noreferrer">byte<span>bymanas</span> ↗</a><div class="tagline">Building systems. Learning intelligence. Shipping with intent.</div></div><div class="footerNote">Designed as a learning companion · Progress stays in this browser · v2.1</div></div></footer>
+<div class="toast" id="toast">Progress updated</div><canvas id="confetti"></canvas>
+<div class="pal" id="pal"><div class="palBack" id="palBack"></div><div class="palBox" role="dialog" aria-label="Search"><input id="palInput" placeholder="Search topics, case studies, resources…" autocomplete="off" aria-label="Search"><div class="palList" id="palList"></div><div class="palFoot"><span>↑↓ navigate</span><span>↵ open</span><span>esc close</span></div></div></div>
+<script>
+const phases=[
+{ id:'p0',num:'PHASE 00',title:'Fundamentals',weeks:'Weeks 1–2',category:'foundations',icon:'⌁',summary:'Understand what happens inside one machine and across a network before designing clusters.',headlines:['Networking: TCP, UDP, HTTP/1.1–3, TLS, DNS, gRPC','OS + concurrency: threads, I/O, locks, atomics','Core data structures + estimation basics'],intro:'Learn single-node mechanics and the network path before designing clusters; every later trade-off rests on these.',topics:[
+['Networking foundations','TCP handshake, flow and congestion control, TIME_WAIT; UDP use cases; HTTP/1.1 vs HTTP/2 multiplexing vs HTTP/3 (QUIC); TLS handshake; DNS resolution, TTLs and CNAME routing; gRPC over Protobuf.'],
+['Operating systems','Processes vs threads, thread pools, context-switch cost, virtual memory and page cache, file descriptors, blocking vs non-blocking I/O (epoll, kqueue).'],
+['Concurrency','Race conditions, deadlock conditions, mutexes, semaphores, atomic operations, compare-and-swap (CAS).'],
+['Data structures','Hash tables, heaps, queues, tries, and probabilistic structures: Bloom filter, HyperLogLog, count-min sketch. B-Trees and LSM-Trees arrive in Phase 2.'],
+['Estimation + latency','Powers of two, seconds per day (~10⁵), QPS from daily requests, storage per year. Latency anchors: RAM ~100 ns, NVMe read ~100 µs, same-datacenter round trip ~0.5 ms, cross-continent ~100–150 ms.'],
+['Optional: systems internals','Kernel-bypass networking (DPDK) and eBPF. Skip if you are behind by more than two weeks.']],exercise:'Write a small multi-threaded TCP echo server. Then trace one HTTPS request with curl -v and Wireshark, labelling each step.',gate:'Explain a request from browser to database from memory, including DNS, TLS, HTTP, application processing, and data access.',resources:['Understanding Distributed Systems — Roberto Vitillo, Chapters 1–5','Beej’s Guide to Network Programming (skim)']},
+{ id:'p1',num:'PHASE 01',title:'LLD, OOD & API contracts',weeks:'Weeks 3–4',category:'foundations',icon:'◇',summary:'Turn ambiguous requirements into clean classes, safe concurrency, and precise API contracts.',headlines:['SOLID + useful design patterns','Thread-safe LLD exercises','REST, gRPC, pagination + data modelling'],intro:'Turn an ambiguous spec into clean classes and precise API schemas; many interview loops include a coding-style design round.',topics:[
+['OOD + SOLID','Focus on Strategy, Factory, Observer, State, Decorator and Adapter. Skip obscure patterns.'],
+['Concurrency in LLD','Thread-safe singletons, producer-consumer with a bounded queue, and read-write locks.'],
+['API design','REST conventions and status codes, idempotency keys for safe retries, versioning, rate-limit headers, and error models.'],
+['Protocols','REST vs gRPC vs GraphQL vs WebSockets—and when each fits.'],
+['Pagination','Offset vs cursor/keyset pagination; why offset degrades on deep pages.'],
+['Data modelling','Entity-relationship basics, normalization vs denormalization, and schema evolution.']],exercise:'Code each exercise in 45 minutes, then refactor: (1) thread-safe in-memory rate limiter using token bucket and sliding window; (2) parking lot with pluggable pricing strategies; (3) elevator controller with concurrent requests and a scheduling strategy; (4) LRU cache with O(1) get/put, then add TTL and thread safety; (5) Splitwise-style expense sharing with a debt-simplification algorithm.',gate:'Draw a UML class diagram and write typed request and response schemas for any exercise in under 20 minutes.',resources:['System Design Interview, Vol. 1 — Alex Xu (reference alongside later phases)']},
+{ id:'p2',num:'PHASE 02',title:'HLD building blocks',weeks:'Weeks 5–10',category:'hld',icon:'▤',summary:'Learn the components behind scalable systems, then apply each block in a case study the same week.',gate:'Pass a mock on TinyURL and a news feed.',headlines:['Scaling, storage engines, indexes + sharding','Caching + Redis rate limiting','Queues, real-time, search + geo'],intro:'Each block is followed by a case study that uses it within the same week. Begin one mock interview per week now.',subsections:[
+{title:'2A · Scaling and the data tier · Weeks 5–6',topics:[
+['Scaling path','Single server, stateless web tier, load balancing (L4 vs L7; round robin, least connections, consistent hashing), auto-scaling, sticky sessions and why to avoid them.'],
+['Edge and traffic','DNS and GeoDNS, CDN (push vs pull, cache keys, invalidation), reverse proxy, API gateway (auth, routing, throttling), service discovery.'],
+['SQL vs NoSQL','Relational, document, key-value, wide-column, graph. Choose by access pattern, consistency need and scale—not by fashion.'],
+['Storage engines','B-Trees (page-based, in-place updates) vs LSM-Trees (memtable, WAL, SSTables, compaction) and Bloom filters; write-amplification and read-amplification trade-offs.'],
+['Indexing','Primary and secondary indexes, composite-index column order, covering indexes, local vs global secondary indexes in distributed stores.'],
+['Partitioning','Range vs hash sharding, consistent hashing with virtual nodes, hot partitions and hot keys, resharding and rebalancing strategies.'],
+['Replication basics','Primary-follower replication, replication lag, and read-your-writes problems.']],exercise:'Case 1 — TinyURL: capacity estimation, Base62 encoding vs a key-generation service, 301 vs 302 redirects, SQL vs NoSQL, read replicas and cache. Case 2 — Pastebin/object-backed content store: metadata in a database, blobs in object storage, expiry and cleanup.',gate:'Pass a mock on TinyURL and a news feed.'},
+{title:'2B · Caching · Week 7',topics:[
+['Cache locations','Browser, CDN, application-local, and external cache (Redis, Memcached).'],
+['Cache-aside (lazy loading)','The application checks the cache, reads the database on a miss, then populates the cache itself. The application owns the logic.'],
+['Read-through','The application only talks to the cache layer; on a miss, the cache itself loads from the database.'],
+['Write-through vs write-back','Write-through: the cache layer synchronously writes to the database before acknowledging. Write-back/write-behind: cache accepts writes and flushes asynchronously in batches; faster, but data may be lost if the cache fails first.'],
+['Invalidation','TTL, explicit delete on write, versioned keys. Know why “delete, don’t update” is the safer default for cache-aside.'],
+['Failure modes + eviction','Stampede: request coalescing, jittered TTLs, probabilistic early refresh. Penetration: negative caching, Bloom filter. Avalanche: mass expiry. Hot keys: local replicas. Eviction: LRU, LFU, TTL; approximate LRU as Redis uses it.']],exercise:'Case 3 — Distributed rate limiter: token bucket and sliding-window counter; make check-and-update atomic in Redis using a Lua script or atomic INCR with expiry. Avoid a distributed lock on the hot path. Cover per-user vs per-IP vs per-API-key, rate-limit headers, fail-open vs fail-closed, and multi-region limits.'},
+{title:'2C · Asynchronous processing and messaging · Week 8',topics:[
+['Brokers vs logs','RabbitMQ-style queues vs Kafka-style partitioned logs; consumer groups, partition keys, offsets, ordering only within a partition, retention and replay.'],
+['Delivery semantics','At-most-once, at-least-once, and effectively-once via idempotent consumers or transactional outbox. True exactly-once end-to-end is a design goal, not a given.'],
+['Messaging patterns','Pub/sub, fanout, work queues, dead-letter queues, exponential backoff with jitter, backpressure, outbox pattern and change data capture (CDC).']],exercise:'Case 4 — Notification system: push/SMS/email, provider abstraction, user preferences, deduplication, priority queues, retry budgets and provider rate limits. Case 5 — Job scheduler: delayed/recurring jobs, leader-based vs partitioned schedulers, at-least-once execution with idempotency, visibility timeouts.'},
+{title:'2D · Real-time systems and fanout · Week 9',topics:[
+['Real-time transports','Short polling, long polling, WebSockets, Server-Sent Events; connection-state servers, presence and heartbeats.'],
+['Fanout','Fanout-on-write (push), fanout-on-read (pull), and hybrid for high-follower accounts.'],
+['Ordering and IDs','Snowflake-style time-sortable IDs, per-conversation sequence numbers, and clock-skew caveats.']],exercise:'Case 6 — Chat system: WebSocket gateway, message store, offline delivery, group chat and read receipts. Case 7 — News feed: hybrid fanout, timeline cache, ranking hooks and the celebrity problem.'},
+{title:'2E · Search, geo and aggregation · Week 10',topics:[
+['Search architecture','Inverted index, tokenization, TF-IDF and BM25, shard by document vs term, near-real-time indexing, typeahead using tries or prefix indexes.'],
+['Geospatial systems','Geohash, quadtree, S2 and H3 cells; proximity-search trade-offs.'],
+['Aggregation at scale','Log and metrics pipelines, counters at scale, approximate algorithms (HyperLogLog, count-min sketch), top-K.']],exercise:'Case 8 — Typeahead and search suggestions. Case 9 — Proximity service (nearby places or ride matching).'}],resources:['System Design Interview, Vol. 1 & 2 — Alex Xu','Designing Data-Intensive Applications — selected chapters']},
+{ id:'p3',num:'PHASE 03',title:'Distributed systems depth',weeks:'Weeks 11–14',category:'distributed',icon:'⤳',summary:'Build the reasoning needed to explain consistency, transactions, consensus, and failure handling.',headlines:['Replication + consistency models','Transactions, isolation + distributed workflows','Raft, resilience, observability, security + DR'],intro:'This is where deeper system-design interviews are won. Learn replication and consistency before consensus; each concept builds on the last.',subsections:[
+{title:'Week 11 · Replication and consistency',topics:[
+['Replication models','Single-leader (sync, async, semi-sync), multi-leader (conflict resolution: last-write-wins, CRDTs), leaderless with quorums (R + W > N).'],
+['Quorum caveat','R + W > N does not by itself guarantee linearizability; sloppy quorums, concurrent writes and clock skew can still return stale data.'],
+['Consistency spectrum','Linearizability, sequential, causal, read-your-writes, monotonic reads, eventual consistency.'],
+['Time and clocks','Wall clocks vs logical clocks, Lamport and vector clocks, hybrid logical clocks, TrueTime-style bounded uncertainty.'],
+['CAP + PACELC','During a partition, choose consistency or availability; otherwise PACELC frames latency vs consistency trade-offs.']]},
+{title:'Week 12 · Transactions and isolation',topics:[
+['ACID','Understand what Atomicity, Consistency, Isolation and Durability really promise.'],
+['Isolation levels + anomalies','Read committed, snapshot isolation, repeatable read, serializable. Name and draw dirty read, non-repeatable read, phantom, lost update and write skew.'],
+['Implementations','Two-phase locking, MVCC, optimistic concurrency control, serializable snapshot isolation.'],
+['Distributed transactions','Two-phase commit and its blocking problem; Saga (choreography vs orchestration), compensating actions, outbox pattern, idempotency keys.']] ,exercise:'Explain how to prevent double booking in a ticketing system using row locks, conditional writes and unique constraints.'},
+{title:'Week 13 · Consensus and coordination',topics:[
+['What consensus solves','Leader election, atomic broadcast, replicated state machines, distributed locks and leases with fencing tokens.'],
+['Protocols','Paxos at the idea level; Raft in detail: terms, leader election, log replication, commit rules, safety and membership change.'],
+['Coordination services','ZooKeeper and etcd: what they are for—and what they are not for.'],
+['Failure models','Crash-stop, crash-recovery, network partition, gray failure; Byzantine faults as awareness only.']],exercise:'Read the Raft paper and use a visualizer. MIT 6.5840 labs are optional, written in Go, and can take months; do them only for infrastructure-focused roles.'},
+{title:'Week 14 · Resilience, operations, security and multi-region',topics:[
+['Resilience patterns','Timeouts and deadlines, retries with exponential backoff and jitter, retry budgets, circuit breakers, bulkheads, load shedding, graceful degradation, hedged requests.'],
+['SRE basics','SLIs, SLOs, SLAs, error budgets, four golden signals (latency, traffic, errors, saturation), alert design, incident response and postmortems.'],
+['Observability','Metrics, logs, distributed traces, correlation IDs and sampling.'],
+['Deployments','Blue-green, canary, feature flags, rollbacks, schema migrations without downtime.'],
+['Security','Authentication vs authorization, OAuth 2.0 and OIDC, JWT trade-offs, session tokens, API keys, mTLS, encryption at rest/in transit, secrets management, abuse rate-limiting and PII handling.'],
+['Multi-region + disaster recovery','Active-passive vs active-active, RPO and RTO, data residency, cross-region replication lag, failover testing.']],gate:'Without notes, explain write skew, a Raft leader election, and why 2PC blocks. Then revisit an earlier case study and add a failure-handling section.'}],resources:['Designing Data-Intensive Applications — Martin Kleppmann, Parts II & III (Chapters 5–9 first)','The Raft paper + visualizer','Google SRE Book: SLO and monitoring chapters','MIT 6.5840 Distributed Systems course site']},
+{ id:'p4',num:'PHASE 04',title:'Production case-study bank',weeks:'Weeks 15–18',category:'hld',icon:'▦',summary:'Combine the building blocks into end-to-end systems and defend your choices under load and failure.',headlines:['10 production architecture exercises','Capacity + bottleneck analysis','Failure paths, monitoring + migrations'],intro:'Time-box each design to 45 minutes on a blank page, then spend 30 minutes comparing against a reference solution and logging what you missed.',topics:[
+['1 · Google Drive / Dropbox','Chunking, delta sync, metadata sharding, object storage, conflict handling.'],
+['2 · Distributed key-value store','Dynamo/Cassandra style: consistent hashing, quorums, gossip, hinted handoff, LSM storage, anti-entropy.'],
+['3 · Distributed unique ID generator','Snowflake layout, clock skew, machine ID assignment, ordering guarantees.'],
+['4 · YouTube / Netflix','Upload and transcoding pipeline, blob storage, CDN, adaptive streaming (HLS and DASH).'],
+['5 · Web crawler','Frontier queue, politeness, deduplication, DNS cache, URL prioritization.'],
+['6 · Payment system + ledger','Idempotency, double-entry bookkeeping, reconciliation, exactly-once effects, Sagas.'],
+['7 · Ticket / seat booking','Concurrency control, holds with expiry, double-booking prevention, flash sales.'],
+['8 · Metrics, logging + monitoring','Ingestion, time-series storage, downsampling, alerting, cardinality limits.'],
+['9 · Collaborative document editing','Operational transform vs CRDTs, presence, version history, offline merge.'],
+['10 · Distributed message queue','Kafka-style partitioned log, replication and ISR, consumer groups, retention, ordering.']],exercise:'For every design: estimate QPS, peak QPS, storage and bandwidth; name the single point of failure and first bottleneck at 10× load; state the consistency level and why; explain node loss, partition and retry-storm behavior; describe monitoring, deployment and data migration.',gate:'Finish any design in 45 minutes with a clear bottleneck analysis.'},
+{ id:'p5',num:'PHASE 05',title:'AI/ML system design',weeks:'Weeks 19–22',category:'ml',icon:'✳',summary:'Design the full ML lifecycle: data, training, serving, evaluation, monitoring and feedback loops.',headlines:['Feature stores + distributed training','GPU inference + LLM serving','RAG, fine-tuning, evaluation + drift'],intro:'ML systems can fail silently from data and concept drift, not only code bugs. Every design must cover data, training, serving and monitoring as one loop.',subsections:[
+{title:'Week 19 · Data and training infrastructure',topics:[
+['Data pipelines','Batch (Spark, Airflow) vs streaming (Kafka, Flink); data validation, labeling pipelines, dataset versioning and lineage.'],
+['Feature stores','Offline store (warehouse or object storage) vs online store (Redis or low-latency key-value store); point-in-time-correct joins; share feature definitions to prevent training-serving skew.'],
+['Training pipelines','Orchestration (Kubeflow, Airflow), experiment tracking and model registry (MLflow), reproducibility.'],
+['Distributed training','Data/model/tensor/pipeline parallelism, ZeRO and FSDP at concept level, gradient synchronization (all-reduce), checkpointing, fault recovery and mixed precision.']]},
+{title:'Week 20 · Serving and GPU inference',topics:[
+['Serving modes','Online low-latency inference, batch prediction, streaming inference; latency budgets and fallbacks.'],
+['Release safety','Shadow deployment, canary, A/B testing, rollback and model versioning.'],
+['Inference optimization','Dynamic batching, quantization (FP16, INT8), distillation, model compilation (TensorRT), GPU autoscaling and cost control.'],
+['LLM serving','Prefill vs decode, KV cache, continuous batching, PagedAttention (as in vLLM), speculative decoding, time-to-first-token vs tokens-per-second trade-offs, multi-tenant scheduling.']]},
+{title:'Week 21 · RAG, LLM applications and fine-tuning',topics:[
+['Retrieval','Embedding generation, chunking, vector indexes (HNSW, IVF-PQ), recall vs latency vs memory, metadata filtering, hybrid dense + sparse (BM25) search, reranking.'],
+['LLM platform pieces','Gateway, prompt routing, semantic caching, rate limits and quotas, input/output guardrails, prompt-injection defenses and cost tracking.'],
+['Agents + tools','Tool calling, state management, timeouts and idempotency for tool side effects.'],
+['Adaptation choices','Prompt engineering vs RAG vs fine-tuning; LoRA and parameter-efficient methods; know when each is appropriate.']]},
+{title:'Week 22 · Evaluation and monitoring',topics:[
+['Offline metrics','Precision, recall, AUC, NDCG, calibration; dataset splits that avoid leakage.'],
+['Online evaluation','A/B tests, guardrail metrics, interleaving for ranking, delayed ground truth/label availability.'],
+['LLM evaluation','Golden sets, LLM-as-judge and its biases, human review loops, prompt regression suites.'],
+['Monitoring','Data drift vs concept drift, PSI and KS tests, feature freshness, prediction distribution, retraining triggers and feedback loops.'],
+['Monitoring vs observability','Monitoring tracks latency, QPS and GPU use; observability helps explain why model behavior changed.']],exercise:'Use a fixed ML design template: problem and metric → data and labels → features → model choices → training → serving → evaluation → monitoring → failure modes.',gate:'Design a recommender and a RAG chatbot end-to-end in 45 minutes each, including how you would detect quality degradation.',resources:['Designing Machine Learning Systems — Chip Huyen','vLLM paper and documentation','Google’s Rules of Machine Learning','One current vector-database architecture guide']}]},
+{ id:'p6',num:'PHASE 06',title:'Interview execution & mocks',weeks:'Weeks 23–24 + weekly mocks',category:'interview',icon:'◷',summary:'Turn knowledge into clear, time-boxed communication and repeatable interview performance.',headlines:['45-minute design framework','Weekly mock loop + feedback','Scoring rubric + exit criteria'],intro:'Practice the 45-minute format early and often. Communication is scored as heavily as the design.',topics:[
+['Scope · 3–5 min','Clarify functional requirements, users, read/write ratio, latency and availability targets, consistency needs. Write down what is out of scope.'],
+['Estimation · 3 min','QPS, peak QPS, storage per year and bandwidth. State assumptions out loud.'],
+['API + data model · 3–5 min','Define core endpoints and main entities.'],
+['High-level design · 10–12 min','Draw clients, edge, services, data stores, queues and caches; walk one read path and one write path.'],
+['Deep dives · 15–18 min','Pick the two hardest components—usually partitioning, consistency, hot keys or failure handling. Discuss alternatives and why you rejected them.'],
+['Wrap-up · 2–3 min','Bottlenecks, failure modes, monitoring and what you would build next.']],exercise:'Weekly mock schedule: Weeks 5–10, one building-block design/week; Weeks 11–18, one case study/week with failure-handling deep dive and written feedback; Weeks 19–22, one ML design/week; Weeks 23–24, three full loops (two general, one company-specific), including behavioral stories.',gate:'Be ready only when every exit criterion below stays true for two consecutive weeks.',resources:['Score every mock on scoping, estimation, design clarity, trade-offs/failure handling, communication/pacing/hints']}
+];
+const productionCases=[
+['TinyURL','Capacity estimation, Base62 vs key-generation service, 301 vs 302, SQL vs NoSQL, read replicas and cache.','building','Weeks 5–6'],['Pastebin / object-backed store','Metadata in a database, blobs in object storage, expiry and cleanup.','building','Weeks 5–6'],['Distributed rate limiter','Token bucket, sliding window, atomic Redis update, fail-open/fail-closed, multi-region limits.','building','Week 7'],['Notification system','Push/SMS/email, preferences, provider abstraction, dedupe, priorities and retry budgets.','building','Week 8'],['Job scheduler','Delayed/recurring jobs, partitioning, idempotency, visibility timeouts.','building','Week 8'],['Chat system','WebSocket gateway, message store, offline delivery, group chat, read receipts.','building','Week 9'],['News feed','Hybrid fanout, timeline cache, ranking hooks, celebrity problem.','building','Week 9'],['Typeahead / search suggestions','Inverted index, near-real-time indexing, prefix search, query latency.','building','Week 10'],['Proximity service','Geohash/quadtree/S2/H3, nearby places or ride matching.','building','Week 10'],['Google Drive / Dropbox','Chunking, delta sync, metadata sharding, object storage, conflict handling.','production','Week 15'],['Distributed key-value store','Consistent hashing, quorums, gossip, hinted handoff, LSM, anti-entropy.','production','Week 15'],['Distributed ID generator','Snowflake layout, clock skew, machine ID assignment, ordering.','production','Week 15'],['YouTube / Netflix','Upload/transcoding, blob storage, CDN, HLS/DASH adaptive streaming.','production','Week 16'],['Web crawler','Frontier queue, politeness, deduplication, DNS cache, URL prioritization.','production','Week 16'],['Payment system + ledger','Idempotency, double-entry bookkeeping, reconciliation, Sagas.','production','Week 16'],['Ticket / seat booking','Concurrency control, expiring holds, double-booking prevention, flash sales.','production','Week 17'],['Metrics/logging/monitoring pipeline','Ingestion, time-series storage, downsampling, alerting, cardinality limits.','production','Week 17'],['Collaborative document editing','Operational transform vs CRDTs, presence, version history, offline merge.','production','Week 18'],['Distributed message queue','Kafka-style partitioned log, replication/ISR, consumer groups, retention, ordering.','production','Week 18'],['Recommendation system','Candidate generation, ranking, two-tower retrieval, cold start, feedback loops.','ml','AI/ML'],['Search ranking','Query understanding, learning to rank, relevance labels, latency budget.','ml','AI/ML'],['Ad click prediction','Feature crosses, calibration, delayed labels, real-time bidding constraints.','ml','AI/ML'],['Fraud detection','Class imbalance, streaming features, adversarial drift, human review queue.','ml','AI/ML'],['RAG chatbot over company docs','Chunking, hybrid retrieval, citations, access control, evaluation.','ml','AI/ML'],['LLM inference platform','Batching, KV cache, autoscaling, multi-tenant fairness, cost per token.','ml','AI/ML'],['Real-time feature store + ML platform','Offline-online consistency, freshness, lineage, backfills.','ml','AI/ML']
+];
+const maps={system:{root:'SYSTEM DESIGN',branches:[['Requirements','Users · use cases · latency · availability · consistency','Start with what the system must do and the quality targets it must meet.'],['Traffic + estimation','QPS · peak load · storage · bandwidth','Put rough numbers behind the requirements before choosing components.'],['API + data model','Contracts · entities · access patterns','Define how clients interact and what data must be stored/queryable.'],['Architecture','Clients · edge · services · cache · database · queue','Draw the main components and walk through a read and write request.'],['Scale + trade-offs','Replication · partitioning · caching · bottlenecks','Explain what changes at 10× load and why a chosen design fits.'],['Reliability','Timeouts · retries · monitoring · recovery','Describe how the system behaves when dependencies or regions fail.']]},distributed:{root:'DISTRIBUTED SYSTEMS',branches:[['Replication','Leader · follower · multi-leader · leaderless','Copies improve availability and read scale but introduce lag and conflict handling.'],['Consistency','Linearizable · causal · eventual · read-your-writes','Choose the guarantee based on the user-visible correctness requirement.'],['Transactions','ACID · MVCC · locks · isolation anomalies','Understand which concurrent operations can interfere and how to prevent it.'],['Coordination','Raft · leader election · leases · fencing tokens','Coordinate shared decisions without trusting a single process forever.'],['Messaging','Queues · logs · partitions · idempotency · outbox','Design asynchronous work around retries, ordering, and duplicate delivery.'],['Resilience','SLOs · circuit breakers · load shedding · DR','Make failure behavior explicit and measurable.']]},ml:{root:'AI / ML SYSTEM',branches:[['Data foundation','Pipelines · labels · lineage · validation','Bad or delayed data can silently break an otherwise healthy model.'],['Features + training','Offline/online store · point-in-time joins · reproducibility','Prevent training-serving skew and make training runs repeatable.'],['Serving','Online/batch · GPU capacity · batching · quantization','Fit latency, throughput, quality and cost to the product requirement.'],['RAG / LLM platform','Chunking · retrieval · reranking · gateway · guardrails','Optimize relevance and protect tool/data access, not only model output.'],['Evaluation','Offline metrics · A/B tests · golden sets · human review','Measure both offline quality and real-world user outcomes.'],['Monitoring + feedback','Drift · freshness · latency · cost · retraining','Detect degraded quality and decide when to investigate or retrain.']]},interview:{root:'45-MINUTE INTERVIEW',branches:[['Scope','Requirements · constraints · out of scope','Agree on the problem before proposing a solution.'],['Estimate','QPS · storage · bandwidth · peak factor','State assumptions and sanity-check the scale.'],['Model','API · entities · access patterns','Show the core contract and data model.'],['Design','Read path · write path · component diagram','Keep the high-level design legible and explain the flow.'],['Deep dive','Hardest two components · alternatives','Go deep on trade-offs, consistency, bottlenecks or failures.'],['Wrap up','Risks · observability · next improvements','Close with a concise summary and remaining trade-offs.']]}};
+const resources=[
+['System Design Interview, Vol. 1 & 2','Alex Xu','Frameworks and worked designs. Read alongside HLD and production case studies.','https://www.amazon.com/System-Design-Interview-insiders-Second/dp/B08CMF2CQF','Book'],
+['Understanding Distributed Systems','Roberto Vitillo','Begin with fundamentals; revisit selected chapters while learning distributed design.','https://understandingdistributed.systems/','Start here'],
+['Designing Data-Intensive Applications','Martin Kleppmann','Core reference for storage, replication, transactions and consensus. Start with Chapters 5–9 in Phase 3.','https://dataintensive.net/','Core reference'],
+['Designing Machine Learning Systems','Chip Huyen','Use for production ML pipelines, serving, evaluation and monitoring.','https://www.oreilly.com/library/view/designing-machine-learning-systems/9781098107956/','AI/ML'],
+['Google Site Reliability Engineering','Google','Free online chapters on SLOs, monitoring, incidents and reliability.','https://sre.google/books/','Free'],
+['MIT 6.5840 Distributed Systems','MIT','Advanced distributed systems lectures and labs. Go labs are optional and can take months.','https://pdos.csail.mit.edu/6.5840/','Advanced / optional'],
+['Beej’s Guide to Network Programming','Brian “Beej” Hall','A practical skim alongside networking fundamentals and the TCP echo-server exercise.','https://beej.us/guide/bgnet/','Free'],
+['Raft paper','Diego Ongaro & John Ousterhout','Read when studying leader election, log replication and consensus.','https://raft.github.io/raft.pdf','Paper'],
+['Dynamo paper','Amazon','Primary source for highly available key-value storage concepts.','https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf','Paper'],
+['Kafka documentation','Apache Kafka','Reference for partitions, consumer groups, retention, ordering and replication.','https://kafka.apache.org/documentation/','Docs'],
+['vLLM paper + documentation','vLLM team','For PagedAttention, KV cache management and high-throughput LLM serving.','https://docs.vllm.ai/','AI/ML'],
+['Google’s Rules of Machine Learning','Google','Practical guidance for reliable production ML systems.','https://developers.google.com/machine-learning/guides/rules-of-ml','Free']
+];
+const exitCriteria=['I finish a fresh design prompt in 45 minutes with scope, estimates, API, diagram and two deep dives.','I can explain isolation anomalies, quorum limits and Raft elections without notes.','I can state delivery semantics, ordering guarantees and idempotency for any queue-based design.','I choose a shard key and defend it against hot-partition objections.','I include security, monitoring and multi-region failure handling without being asked.','I have scored 4/5 or higher on the rubric in six mocks.','I can design a recommender and a RAG system including evaluation and drift monitoring.'];
+
+/* ================= App logic (UI only — all roadmap content lives in the data block above) ================= */
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+const ls={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:v}catch(e){return d}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const THEME_KEY='bytebymanas-roadmap-theme',STORAGE='bytemanas-system-design-roadmap-v2',CASES_KEY='bytebymanas-cases-done',MOCK_KEY='byte-mock-scores';
+const root=document.documentElement,reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const isMac=/Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent);$('#kbdHint').textContent=isMac?'⌘ K':'Ctrl K';
+
+/* ---------- theme ---------- */
+function applyTheme(t){root.dataset.theme=t;$('#themeToggle').textContent=t==='dark'?'☀️':'🌙';$('#themeToggle').setAttribute('aria-label',t==='dark'?'Switch to light mode':'Switch to dark mode');const m=$('meta[name=theme-color]');if(m)m.content=t==='dark'?'#060912':'#f3f5fb';ls.set(THEME_KEY,t)}
+applyTheme(ls.get(THEME_KEY,'dark')==='light'?'light':'dark');
+$('#themeToggle').onclick=()=>applyTheme(root.dataset.theme==='dark'?'light':'dark');
+
+/* ---------- helpers ---------- */
+const GRAD=[['#7898ff','#52ded1'],['#9d85ff','#65b9ff'],['#5bdbd0','#7b9cff'],['#65d8a8','#58c7d8'],['#f7b46a','#ec7fae'],['#b49aff','#5ccfe0'],['#7b9cff','#ed8dc1']];
+const gStyle=i=>`--g1:${GRAD[i%GRAD.length][0]};--g2:${GRAD[i%GRAD.length][1]}`;
+function weekRange(ph){const m=ph.weeks.match(/(\d+)–(\d+)/);return m?[+m[1],+m[2]]:[1,1]}
+function ringSVG(cls,size,r,sw,id,fs){const c=size/2;return `<svg class="${cls}" viewBox="0 0 ${size} ${size}"><circle class="rb" cx="${c}" cy="${c}" r="${r}" stroke-width="${sw}"/><circle class="rf" data-ring="${id}" cx="${c}" cy="${c}" r="${r}" stroke-width="${sw}" style="stroke:var(--g1)"/><text class="rt" x="${c}" y="${c}" data-ringtxt="${id}" style="font-size:${fs}px">0%</text></svg>`}
+function setRing(el,f){const r=+el.getAttribute('r'),C=2*Math.PI*r;el.style.strokeDasharray=C;el.style.strokeDashoffset=C*(1-f)}
+let toastT;function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('show'),1700)}
+
+/* ---------- render phases ---------- */
+function topicHTML(t,idx,pid){const id=pid+'-'+idx;return `<label class="topic" data-id="${id}" data-q="${esc((t[0]+' '+t[1]).toLowerCase())}"><span class="chk"><input type="checkbox" data-check="${id}" aria-label="Mark ${esc(t[0])} complete"><i></i></span><span class="tbody"><b>${esc(t[0])}</b><span>${esc(t[1])}</span></span></label>`}
+const gateHTML=g=>`<div class="gate"><strong>Gate to move on</strong><p>${esc(g)}</p></div>`;
+function renderPhase(ph,pi){
+  const groups=ph.subsections?ph.subsections.map((s,si)=>`<section class="dsec"><h4>${esc(s.title)}<em data-sprog></em></h4><div>${s.topics.map((t,i)=>topicHTML(t,`s${si}t${i}`,ph.id)).join('')}</div>${s.exercise?`<div class="phaseIntro practice"><strong>Practice:</strong> ${esc(s.exercise)}</div>`:''}${s.gate?gateHTML(s.gate):''}</section>`).join(''):`<section class="dsec"><h4>Full syllabus<em data-sprog></em></h4><div>${ph.topics.map((t,i)=>topicHTML(t,`t${i}`,ph.id)).join('')}</div></section>`;
+  const res=ph.resources?`<section class="dsec"><h4>Resources</h4><div class="resourceChips">${ph.resources.map(r=>`<span class="resourceChip">↗ ${esc(r)}</span>`).join('')}</div></section>`:'';
+  const ex=ph.exercise?`<section class="dsec"><h4>Practical work</h4><div class="phaseIntro" style="margin-top:12px">${esc(ph.exercise)}</div></section>`:'';
+  const gate=ph.gate?gateHTML(ph.gate):'';
+  const exit=ph.id==='p6'?`<section class="dsec"><h4>Final exit criteria · all must stay true for two consecutive weeks<em data-sprog></em></h4><div>${exitCriteria.map((t,i)=>`<label class="topic" data-id="exit-${i}" data-q="${esc(('exit criterion '+(i+1)+' '+t).toLowerCase())}"><span class="chk"><input type="checkbox" data-check="exit-${i}" aria-label="Exit criterion ${i+1}"><i></i></span><span class="tbody"><b>Exit criterion ${i+1}</b><span>${esc(t)}</span></span></label>`).join('')}</div></section>`:'';
+  return `<article class="phase spot rv" id="phase-${ph.id}" data-pid="${ph.id}" data-idx="${pi}" data-phase="${ph.category}" data-head="${esc((ph.title+' '+ph.summary+' '+ph.headlines.join(' ')).toLowerCase())}" style="${gStyle(pi)}"><div class="phead" role="button" tabindex="0" aria-expanded="false"><div class="pnum">${esc(ph.num.replace('PHASE ',''))}</div><div><div class="pkicker">${esc(ph.num)} · ${esc(ph.weeks)}</div><h3>${esc(ph.title)}</h3><p>${esc(ph.summary)}</p><div class="pills"><span class="pill blue">${ph.headlines.length} focus areas</span><span class="pill" data-phase-progress="${ph.id}">0 completed</span></div><div class="pills">${ph.headlines.map(h=>`<span class="pill">${esc(h)}</span>`).join('')}</div></div><div class="pright">${ringSVG('pring',62,26,5,'ph-'+ph.id,14)}<div class="chev">⌄</div></div></div><div class="pbody"><div><div class="pin"><div class="phaseIntro">${esc(ph.intro)}</div>${groups}${ex}${gate}${res}${exit}</div></div></div></article>`}
+const phaseGrid=$('#phaseGrid');phaseGrid.innerHTML=phases.map(renderPhase).join('');
+$$('.phase').forEach(c=>c.dataset.full=c.textContent.toLowerCase());
+
+/* sidebar + week track */
+$('#sidePhases').innerHTML=phases.map((ph,i)=>`<button class="sp" data-goto="${ph.id}" style="${gStyle(i)}">${ringSVG('mring',36,15,3.5,'sp-'+ph.id,9)}<span><b>${esc(ph.title)}</b><small>${esc(ph.weeks)}</small></span></button>`).join('');
+const weeksEl=$('#weeks');let wkHTML='';
+phases.forEach((ph,i)=>{const [a,b]=weekRange(ph);for(let w=a;w<=b;w++)wkHTML+=`<button class="wk ${w===a&&i>0?'pstart':''}" data-goto="${ph.id}" data-ph="${ph.id}" data-k="${w-a}" data-n="${b-a+1}" style="${gStyle(i)}" title="Week ${w} · ${esc(ph.title)}"><span>${w}</span></button>`});
+weeksEl.innerHTML=wkHTML;
+$('#weekLegend').innerHTML=phases.map((ph,i)=>`<button data-goto="${ph.id}" style="${gStyle(i)}"><i></i>${esc(ph.title)}</button>`).join('');
+
+/* ---------- open / close phases ---------- */
+function setOpen(card,open){card.classList.toggle('open',open);$('.phead',card).setAttribute('aria-expanded',open?'true':'false')}
+$$('.phead').forEach(h=>{const card=h.closest('.phase');h.addEventListener('click',()=>setOpen(card,!card.classList.contains('open')));h.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setOpen(card,!card.classList.contains('open'))}})});
+setOpen($('.phase'),true);
+$('#expandAll').onclick=()=>$$('.phase').forEach(c=>setOpen(c,true));
+$('#collapseAll').onclick=()=>$$('.phase').forEach(c=>setOpen(c,false));
+
+/* ---------- views ---------- */
+const VIEWS=['roadmap','mindmaps','cases','interview','resources'];
+function scrollToApp(){const y=$('#appTop').getBoundingClientRect().top+scrollY-84;if(scrollY>y-40)window.scrollTo({top:Math.max(0,y),behavior:reduce?'auto':'smooth'})}
+function openView(name,noScroll){if(!VIEWS.includes(name))name='roadmap';$$('.view').forEach(v=>v.classList.toggle('active',v.dataset.panel===name));$$('[data-view]').forEach(b=>{if(b.closest('#sideNav,#bottomNav'))b.classList.toggle('active',b.dataset.view===name)});if(name!=='mindmaps')stopTour();try{history.replaceState(null,'','#'+name)}catch(e){}if(!noScroll)scrollToApp();observeRv()}
+$$('[data-view]').forEach(b=>b.addEventListener('click',()=>openView(b.dataset.view)));
+$('#heroExplore').onclick=()=>{openView('roadmap',true);$('#appTop').scrollIntoView({behavior:reduce?'auto':'smooth'})};
+
+/* ---------- progress ---------- */
+let saved={};try{saved=JSON.parse(ls.get(STORAGE,'{}'))||{}}catch(e){saved={}}
+const phaseChecks=id=>$$(id==='p6'?'[data-check^="p6-"],[data-check^="exit-"]':`[data-check^="${id}-"]`);
+$$('[data-check]').forEach(c=>{c.checked=!!saved[c.dataset.check];c.closest('.topic').classList.toggle('done',c.checked)});
+const prevFrac={};let prevAll=0,booted=false;
+function firstUndone(){return $$('[data-check]').find(c=>!c.checked)}
+function updateAll(){
+  const all=$$('[data-check]'),done=all.filter(c=>c.checked).length,f=all.length?done/all.length:0,pct=Math.round(f*100);
+  $('#progressFill').style.width=pct+'%';$('#progressPct').textContent=pct+'%';$('#progressCount').textContent=`${done} of ${all.length} topics checked`;
+  setRing($('#heroRing'),f);$('#heroRingTxt').textContent=pct+'%';
+  phases.forEach(ph=>{const ch=phaseChecks(ph.id),n=ch.filter(c=>c.checked).length,fr=ch.length?n/ch.length:0,p=Math.round(fr*100);
+    const lab=$(`[data-phase-progress="${ph.id}"]`);if(lab){lab.textContent=`${n}/${ch.length} completed`;lab.classList.toggle('green',fr===1&&ch.length>0)}
+    ['ph-','sp-'].forEach(k=>{const r=$(`[data-ring="${k}${ph.id}"]`),t=$(`[data-ringtxt="${k}${ph.id}"]`);if(r)setRing(r,fr);if(t)t.textContent=k==='sp-'?(fr===1?'✓':p):p+'%'});
+    $$(`.wk[data-ph="${ph.id}"]`).forEach(w=>{const k=+w.dataset.k,N=+w.dataset.n;w.style.setProperty('--f',Math.max(0,Math.min(1,fr*N-k)))});
+    if(booted&&fr===1&&(prevFrac[ph.id]||0)<1&&ch.length){celebrate();toast(`Phase complete: ${ph.title} 🎉`)}
+    prevFrac[ph.id]=fr});
+  if(booted&&f===1&&prevAll<1){celebrate();toast('Entire roadmap complete. Go ace those mocks. 🏆')}
+  prevAll=f;
+  $$('.dsec').forEach(s=>{const e=$('[data-sprog]',s);if(!e)return;const ch=$$('[data-check]',s);e.textContent=`${ch.filter(c=>c.checked).length}/${ch.length}`});
+  const nx=firstUndone(),btn=$('#continueBtn');
+  if(nx){const ph=nx.closest('.phase'),t=$('.tbody b',nx.closest('.topic')).textContent;$('#nextTitle').textContent=`${$('h3',ph).textContent} — ${t}`;$('#nextGo').textContent='Jump to it →';$('#nextGo').dataset.id=nx.dataset.check;btn.textContent=done?`▶ Continue: ${t.length>30?t.slice(0,28)+'…':t}`:'▶ Start learning';btn.dataset.id=nx.dataset.check}
+  else{$('#nextTitle').textContent='Everything checked. Run full mocks and repeat your exit criteria.';$('#nextGo').textContent='Review roadmap';$('#nextGo').dataset.id='';btn.textContent='▶ Review roadmap';btn.dataset.id=''}
+}
+phaseGrid.addEventListener('change',e=>{const c=e.target.closest('[data-check]');if(!c)return;saved[c.dataset.check]=c.checked;ls.set(STORAGE,JSON.stringify(saved));c.closest('.topic').classList.toggle('done',c.checked);updateAll();toast(c.checked?'Progress saved ✓':'Progress saved')});
+updateAll();booted=true;
+
+/* ---------- navigation helpers ---------- */
+let activeFilter='all';
+function resetFilters(){activeFilter='all';$('#topicSearch').value='';$$('#phaseFilters [data-filter]').forEach(x=>x.classList.toggle('active',x.dataset.filter==='all'));applyFilter()}
+function goPhase(pid){openView('roadmap',true);resetFilters();const card=$('#phase-'+pid);if(!card)return;setOpen(card,true);setTimeout(()=>card.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}),80)}
+function goTopic(id){openView('roadmap',true);resetFilters();const el=$(`[data-check="${id}"]`);if(!el)return;const t=el.closest('.topic');setOpen(t.closest('.phase'),true);setTimeout(()=>{t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});t.classList.remove('flash');void t.offsetWidth;t.classList.add('flash')},420)}
+document.addEventListener('click',e=>{const g=e.target.closest('[data-goto]');if(g)goPhase(g.dataset.goto)});
+$('#nextGo').onclick=()=>{const id=$('#nextGo').dataset.id;id?goTopic(id):goPhase('p6')};
+$('#continueBtn').onclick=()=>{const id=$('#continueBtn').dataset.id;id?goTopic(id):openView('roadmap')};
+
+/* ---------- filter + search ---------- */
+function applyFilter(){
+  const q=$('#topicSearch').value.trim().toLowerCase();let vis=0;
+  $$('.phase').forEach(card=>{
+    const catOK=activeFilter==='all'||card.dataset.phase===activeFilter;let show=catOK;
+    const topics=$$('.topic',card),secs=$$('.dsec',card);
+    topics.forEach(t=>t.classList.remove('hide'));secs.forEach(s=>s.classList.remove('hide'));
+    if(catOK&&q){
+      const headHit=card.dataset.head.includes(q);
+      if(headHit)show=true;
+      else{
+        const hits=topics.filter(t=>t.dataset.q.includes(q));
+        if(hits.length){topics.forEach(t=>t.classList.toggle('hide',!t.dataset.q.includes(q)));secs.forEach(s=>{if(!$$('.topic:not(.hide)',s).length&&!s.textContent.toLowerCase().includes(q))s.classList.add('hide')});show=true}
+        else show=card.dataset.full.includes(q);
+      }
+      if(show)setOpen(card,true);
+    }
+    card.classList.toggle('hide',!show);if(show)vis++;
+  });
+  $('#noResults').style.display=vis?'none':'block';
+}
+$('#topicSearch').addEventListener('input',applyFilter);
+$$('#phaseFilters [data-filter]').forEach(b=>b.addEventListener('click',()=>{$$('#phaseFilters [data-filter]').forEach(x=>x.classList.toggle('active',x===b));activeFilter=b.dataset.filter;applyFilter()}));
+
+/* ---------- reset ---------- */
+$('#resetProgress').onclick=()=>{if(confirm('Reset every checked topic and mock score? This cannot be undone.')){saved={};ls.del(STORAGE);ls.del(MOCK_KEY);ls.del(CASES_KEY);$$('[data-check]').forEach(c=>{c.checked=false;c.closest('.topic').classList.remove('done')});mockScores={};casesDone=new Set();renderRubric();renderCases(caseFilter);Object.keys(prevFrac).forEach(k=>prevFrac[k]=0);prevAll=0;updateAll();toast('Progress reset')}};
+
+/* ---------- case studies ---------- */
+const CG={building:['#7898ff','#52ded1'],production:['#f7b46a','#ec7fae'],ml:['#b49aff','#5ccfe0']};
+let casesDone=new Set();try{casesDone=new Set(JSON.parse(ls.get(CASES_KEY,'[]')))}catch(e){}
+let caseFilter='all';
+function renderCases(filter='all'){caseFilter=filter;const list=productionCases.filter(c=>filter==='all'||c[2]===filter);
+  $('#caseGrid').innerHTML=list.map(c=>{const g=CG[c[2]]||CG.building,d=casesDone.has(c[0]);return `<article class="caseCard spot ${d?'done':''}" style="--g1:${g[0]};--g2:${g[1]}"><div class="caseTop"><div class="caseNum">${esc(c[3])} · ${c[2]==='ml'?'AI/ML':c[2]==='production'?'Production design':'Building block'}</div><button class="caseTick" data-case="${esc(c[0])}" aria-pressed="${d}" aria-label="Mark ${esc(c[0])} as practiced" title="Mark as practiced">✓</button></div><h3>${esc(c[0])}</h3><p>${esc(c[1])}</p><button class="caseFoot" data-view-go="interview">Use the 45-minute framework ↗</button></article>`}).join('');
+  $('#caseCount').textContent=`${productionCases.filter(c=>casesDone.has(c[0])).length} / ${productionCases.length} practiced`}
+renderCases();
+$('#caseGrid').addEventListener('click',e=>{const t=e.target.closest('.caseTick');if(t){const k=t.dataset.case;casesDone.has(k)?casesDone.delete(k):casesDone.add(k);ls.set(CASES_KEY,JSON.stringify([...casesDone]));renderCases(caseFilter);return}if(e.target.closest('[data-view-go]'))openView('interview')});
+$$('#caseFilters [data-casefilter]').forEach(b=>b.addEventListener('click',()=>{$$('#caseFilters [data-casefilter]').forEach(x=>x.classList.toggle('active',x===b));renderCases(b.dataset.casefilter)}));
+
+/* ---------- mind maps ---------- */
+let mapKey='system',mapIdx=0,tourT=null;
+function stopTour(){clearInterval(tourT);tourT=null;const b=$('#tourBtn');if(b)b.textContent='▶ Guided tour'}
+function renderMap(key){mapKey=key;mapIdx=0;stopTour();const m=maps[key],n=m.branches.length;
+  const pos=m.branches.map((_,i)=>{const a=(-90+i*360/n)*Math.PI/180;return [50+36*Math.cos(a),50+38*Math.sin(a)]});
+  $('#mindCanvas').innerHTML=`<div class="mmTools"><span class="miniLabel">Click a branch to explore</span><button class="btn sm" id="tourBtn">▶ Guided tour</button></div><div class="mm"><svg viewBox="0 0 100 100" preserveAspectRatio="none">${pos.map((p,i)=>`<line data-l="${i}" x1="50" y1="50" x2="${p[0]}" y2="${p[1]}"/>`).join('')}</svg><div class="mmRoot">${esc(m.root)}</div>${m.branches.map((b,i)=>`<button class="mmNode" data-branch="${i}" style="left:${pos[i][0]}%;top:${pos[i][1]}%"><b>${esc(b[0])}</b><small>${esc(b[1])}</small></button>`).join('')}</div><div class="mindDetail" id="mindDetail"></div>`;
+  selectBranch(0);$$('.mmNode').forEach(b=>b.addEventListener('click',()=>{stopTour();selectBranch(+b.dataset.branch)}));
+  $('#tourBtn').onclick=()=>{if(tourT){stopTour();return}$('#tourBtn').textContent='⏸ Stop tour';tourT=setInterval(()=>selectBranch((mapIdx+1)%n),3200)}}
+function selectBranch(i){mapIdx=i;const b=maps[mapKey].branches[i];$$('.mmNode').forEach(x=>x.classList.toggle('active',+x.dataset.branch===i));$$('.mm line').forEach(l=>l.classList.toggle('on',+l.dataset.l===i));
+  $('#mindDetail').innerHTML=`<h3>${esc(b[0])}</h3><p>${esc(b[2])}</p><div class="chips">${b[1].split(' · ').map(c=>`<span>${esc(c)}</span>`).join('')}</div>`}
+renderMap('system');
+$$('#mindNav [data-map]').forEach(b=>b.addEventListener('click',()=>{$$('#mindNav [data-map]').forEach(x=>x.classList.toggle('active',x===b));renderMap(b.dataset.map)}));
+
+/* ---------- resources ---------- */
+let resTag='All';
+const resTags=['All',...new Set(resources.map(r=>r[4]))];
+function renderResources(){$('#resFilters').innerHTML=resTags.map(t=>`<button class="filterBtn ${t===resTag?'active':''}" data-tag="${esc(t)}">${esc(t)}</button>`).join('');
+  $('#resourceGrid').innerHTML=resources.filter(r=>resTag==='All'||r[4]===resTag).map((r,i)=>{const g=GRAD[i%GRAD.length];return `<article class="resourceCard spot" style="--g1:${g[0]};--g2:${g[1]}"><div><span class="pill ${r[4]==='Free'?'green':'blue'}">${esc(r[4])}</span></div><h3>${esc(r[0])}</h3><em>${esc(r[1])}</em><p>${esc(r[2])}</p><a href="${esc(r[3])}" target="_blank" rel="noopener noreferrer">Open resource ↗</a></article>`}).join('')}
+renderResources();
+$('#resFilters').addEventListener('click',e=>{const b=e.target.closest('[data-tag]');if(b){resTag=b.dataset.tag;renderResources()}});
+
+/* ---------- interview lab: framework, timer, calculator, rubric ---------- */
+const FW=[['3–5 min','1. Scope:','clarify functional requirements, users, read/write ratio, latency and availability targets, consistency needs, and what is out of scope.'],['3 min','2. Estimate:','QPS, peak QPS, storage per year, bandwidth. State assumptions out loud.'],['3–5 min','3. API + data model:','define core endpoints and main entities.'],['10–12 min','4. High-level design:','draw clients, edge, services, data stores, queues, caches; walk one read path and one write path.'],['15–18 min','5. Deep dives:','choose the two hardest components—partitioning, consistency, hot keys, or failure handling. Compare alternatives.'],['2–3 min','6. Wrap-up:','bottlenecks, failure modes, monitoring, and what you would build next.']];
+$('#framework').innerHTML=FW.map((r,i)=>`<div class="timeRow" data-step="${i}"><div class="time">${r[0]}</div><p><strong>${r[1]}</strong> ${r[2]}</p></div>`).join('');
+const BUD=[5,3,5,12,18,2],NAMES=['Scope','Estimate','API + data model','High-level design','Deep dives','Wrap-up'],TOTAL=45*60;
+const starts=BUD.map((_,i)=>BUD.slice(0,i).reduce((a,b)=>a+b,0)*60),ends=BUD.map((b,i)=>starts[i]+b*60);
+$('#tmSeg').innerHTML=BUD.map((b,i)=>`<div style="flex:${b}" data-seg="${i}"><i></i><span>${NAMES[i]} · ${b}′</span></div>`).join('');
+let tmEl=0,tmRun=false,tmLast=0,tmInt=null,tmIdx=-2;
+const mmss=s=>{s=Math.max(0,Math.ceil(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+function tmRender(){const idx=tmEl>=TOTAL?6:ends.findIndex(e=>tmEl<e);
+  $('#tmClock').textContent=mmss(TOTAL-tmEl);
+  if(idx===6){$('#tmName').textContent='Time!';$('#tmSub').textContent='Wrap up, then log what you missed in your mistake log.'}
+  else if(tmEl===0&&!tmRun){$('#tmName').textContent='Ready when you are';$('#tmSub').textContent='Suggested pacing: the upper end of each range below, totalling 45 min.'}
+  else{$('#tmName').textContent=`${idx+1}. ${NAMES[idx]}`;$('#tmSub').textContent=`${mmss(ends[idx]-tmEl)} left in this step · ${BUD[idx]} min budget`}
+  $$('#tmSeg [data-seg]').forEach((d,i)=>{const fr=Math.max(0,Math.min(1,(tmEl-starts[i])/(BUD[i]*60)));$('i',d).style.width=fr*100+'%';d.classList.toggle('cur',i===idx&&(tmRun||tmEl>0))});
+  $$('#framework .timeRow').forEach((r,i)=>{r.classList.toggle('cur',i===idx&&(tmRun||tmEl>0));r.classList.toggle('past',i<idx)});
+  if(tmRun&&idx!==tmIdx&&tmIdx!==-2&&idx<6)toast(`Next: ${NAMES[idx]}`);tmIdx=idx}
+function tmTick(){const n=Date.now();tmEl=Math.min(TOTAL,tmEl+(n-tmLast)/1000);tmLast=n;if(tmEl>=TOTAL){tmPause();toast('Time! Wrap up your design. ⏱')}tmRender()}
+function tmPause(){tmRun=false;clearInterval(tmInt);$('#tmStart').textContent=tmEl>0&&tmEl<TOTAL?'▶ Resume':'▶ Start'}
+$('#tmStart').onclick=()=>{if(tmRun){tmPause();tmRender();return}if(tmEl>=TOTAL)tmEl=0;tmRun=true;tmLast=Date.now();tmIdx=ends.findIndex(e=>tmEl<e);tmInt=setInterval(tmTick,250);$('#tmStart').textContent='⏸ Pause';tmRender()};
+$('#tmNext').onclick=()=>{const idx=ends.findIndex(e=>tmEl<e);if(idx<0)return;tmEl=ends[idx]-.01;tmLast=Date.now();tmRender()};
+$('#tmReset').onclick=()=>{tmPause();tmEl=0;tmIdx=-2;$('#tmStart').textContent='▶ Start';tmRender()};
+tmRender();
+
+const fmt=n=>{if(!isFinite(n))return'—';const a=Math.abs(n);if(a>=1e9)return(n/1e9).toFixed(2)+'B';if(a>=1e6)return(n/1e6).toFixed(2)+'M';if(a>=1e4)return(n/1e3).toFixed(1)+'K';return a>=100?Math.round(n).toLocaleString():(+n.toFixed(2)).toString()};
+const fmtGB=g=>g>=1e6?(g/1e6).toFixed(2)+' PB':g>=1e3?(g/1e3).toFixed(2)+' TB':(+g.toFixed(2))+' GB';
+function calc(){const v=id=>Math.max(0,parseFloat($(id).value)||0),req=v('#cReq'),pk=v('#cPeak'),wr=v('#cWr'),kb=v('#cKb'),rp=v('#cRep'),yr=v('#cYr');
+  const avg=req/86400,perDay=wr*kb/1e6,perYear=perDay*365;
+  $('#calcOut').innerHTML=[['Average QPS','≈ '+fmt(avg),`≈ ${fmt(req/1e5)} using 10⁵`],['Peak QPS','≈ '+fmt(avg*pk),`at ${pk}× average`],['Raw storage / year',fmtGB(perYear),`${fmtGB(perDay)} per day`],[`With replication ×${rp}`,fmtGB(perYear*yr*rp),`over ${yr} year${yr>1?'s':''}`]].map(o=>`<div class="out"><small>${o[0]}</small><strong>${o[1]}</strong><small>${o[2]}</small></div>`).join('')}
+['#cReq','#cPeak','#cWr','#cKb','#cRep','#cYr'].forEach(i=>$(i).addEventListener('input',calc));calc();
+
+const rubricItems=['Requirements and scoping','Estimation and sanity checks','Design clarity and component fit','Depth on trade-offs and failure handling','Communication, pacing and handling of hints'];
+let mockScores={};try{mockScores=JSON.parse(ls.get(MOCK_KEY,'{}'))||{}}catch(e){}
+function renderRubric(){$('#rubric').innerHTML=rubricItems.map((r,i)=>`<div class="rubricRow"><span>${esc(r)}</span><div class="stars">${[1,2,3,4,5].map(n=>`<button class="star ${(mockScores[i]||0)>=n?'active':''}" data-rubric="${i}" data-score="${n}" aria-label="${esc(r)} score ${n}">${n}</button>`).join('')}</div></div>`).join('');
+  const vals=rubricItems.map((_,i)=>mockScores[i]||0).filter(Boolean),avg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0,el=$('#avg');
+  el.innerHTML=`<span>${vals.length?`Average across ${vals.length} of ${rubricItems.length} criteria`:'Average'}</span><strong>${vals.length?avg.toFixed(1)+' / 5':'—'}</strong>`;el.classList.toggle('ok',vals.length===rubricItems.length&&avg>=4)}
+renderRubric();
+$('#rubric').addEventListener('click',e=>{const s=e.target.closest('.star');if(!s)return;mockScores[s.dataset.rubric]=+s.dataset.score;ls.set(MOCK_KEY,JSON.stringify(mockScores));renderRubric();toast('Mock score saved')});
+
+/* ---------- command palette ---------- */
+const palEl=$('#pal'),palIn=$('#palInput'),palList=$('#palList');let palItems=[],palSel=0,palIdx=[];
+function buildIndex(){const idx=[];
+  [['roadmap','✦','Main roadmap'],['mindmaps','⌘','Mind maps'],['cases','▦','Case studies'],['interview','◷','Interview lab'],['resources','↗','Resources']].forEach(v=>idx.push({k:'View',i:v[1],t:v[2],s:'Open this section',h:v[2].toLowerCase(),run:()=>openView(v[0])}));
+  phases.forEach(ph=>idx.push({k:'Phase',i:'◆',t:`${ph.num} · ${ph.title}`,s:`${ph.weeks} — ${ph.summary}`,h:(ph.title+' '+ph.summary+' '+ph.headlines.join(' ')).toLowerCase(),run:()=>goPhase(ph.id)}));
+  $$('.topic').forEach(t=>{const ph=t.closest('.phase');idx.push({k:'Topic',i:'•',t:$('.tbody b',t).textContent,s:`${$('h3',ph).textContent} — ${$('.tbody span',t).textContent}`,h:t.dataset.q,run:()=>goTopic(t.dataset.id)})});
+  productionCases.forEach(c=>idx.push({k:'Case',i:'▦',t:c[0],s:`${c[3]} — ${c[1]}`,h:(c[0]+' '+c[1]).toLowerCase(),run:()=>{openView('cases');renderCases('all');$$('#caseFilters [data-casefilter]').forEach(x=>x.classList.toggle('active',x.dataset.casefilter==='all'))}}));
+  resources.forEach(r=>idx.push({k:'Resource',i:'↗',t:r[0],s:`${r[1]} — ${r[2]}`,h:(r[0]+' '+r[1]+' '+r[2]).toLowerCase(),run:()=>window.open(r[3],'_blank','noopener')}));
+  return idx}
+palIdx=buildIndex();
+function palRender(){const q=palIn.value.trim().toLowerCase(),toks=q.split(/\s+/).filter(Boolean);
+  let list;if(!toks.length)list=palIdx.filter(x=>x.k==='View'||x.k==='Phase');
+  else list=palIdx.filter(x=>toks.every(t=>x.h.includes(t)||x.t.toLowerCase().includes(t))).sort((a,b)=>{const sa=a.t.toLowerCase().includes(q)?0:1,sb=b.t.toLowerCase().includes(q)?0:1;return sa-sb}).slice(0,16);
+  palItems=list;palSel=0;
+  palList.innerHTML=list.length?list.map((x,i)=>`<div class="palItem ${i===0?'sel':''}" data-i="${i}"><span class="pi">${x.i}</span><div style="min-width:0"><b>${esc(x.t)}</b><small>${esc(x.s)}</small></div><span class="tag">${x.k}</span></div>`).join(''):`<div class="palNone">Nothing matches “${esc(palIn.value)}”. Try a shorter keyword.</div>`}
+function palOpen(){palEl.classList.add('show');palIn.value='';palRender();setTimeout(()=>palIn.focus(),20)}
+function palClose(){palEl.classList.remove('show')}
+function palRun(i){const x=palItems[i];if(!x)return;palClose();setTimeout(x.run,60)}
+function palMove(d){if(!palItems.length)return;palSel=(palSel+d+palItems.length)%palItems.length;$$('.palItem',palList).forEach((e,i)=>e.classList.toggle('sel',i===palSel));$$('.palItem',palList)[palSel].scrollIntoView({block:'nearest'})}
+palIn.addEventListener('input',palRender);
+palIn.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){e.preventDefault();palMove(1)}else if(e.key==='ArrowUp'){e.preventDefault();palMove(-1)}else if(e.key==='Enter'){e.preventDefault();palRun(palSel)}});
+palList.addEventListener('click',e=>{const it=e.target.closest('.palItem');if(it)palRun(+it.dataset.i)});
+palList.addEventListener('mousemove',e=>{const it=e.target.closest('.palItem');if(it&&+it.dataset.i!==palSel){palSel=+it.dataset.i;$$('.palItem',palList).forEach((x,i)=>x.classList.toggle('sel',i===palSel))}});
+$('#palBack').onclick=palClose;$('#openPalette').onclick=palOpen;
+document.addEventListener('keydown',e=>{const tag=(document.activeElement&&document.activeElement.tagName)||'';
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();palEl.classList.contains('show')?palClose():palOpen()}
+  else if(e.key==='Escape'&&palEl.classList.contains('show'))palClose();
+  else if(e.key==='/'&&!/INPUT|TEXTAREA/.test(tag)&&!palEl.classList.contains('show')){e.preventDefault();palOpen()}});
+
+/* ---------- scroll: progress bar, scrollspy, spotlight ---------- */
+let ticking=false;
+function onScroll(){ticking=false;const h=document.documentElement.scrollHeight-innerHeight;$('#scrollbar').style.width=(h>0?scrollY/h*100:0)+'%';
+  if($('#roadmapView').classList.contains('active')){let cur=null;$$('.phase:not(.hide)').forEach(c=>{if(c.getBoundingClientRect().top<=200)cur=c.dataset.pid});$$('.sp').forEach(b=>b.classList.toggle('active',b.dataset.goto===cur))}}
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});onScroll();
+document.addEventListener('mousemove',e=>{const s=e.target.closest&&e.target.closest('.spot');if(s){const r=s.getBoundingClientRect();s.style.setProperty('--mx',(e.clientX-r.left)+'px');s.style.setProperty('--my',(e.clientY-r.top)+'px')}},{passive:true});
+
+/* ---------- reveal + count-up ---------- */
+const rvIO='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');rvIO.unobserve(en.target)}}),{threshold:.06,rootMargin:'0px 0px -40px 0px'}):null;
+function observeRv(){$$('.infoCard:not(.rv),.caseCard:not(.rv),.resourceCard:not(.rv)').forEach(e=>e.classList.add('rv'));$$('.rv:not(.in)').forEach(e=>rvIO?rvIO.observe(e):e.classList.add('in'))}
+observeRv();
+new MutationObserver(()=>observeRv()).observe($('.stage'),{childList:true,subtree:true});
+function countUp(){$$('[data-count]').forEach(el=>{const to=+el.dataset.count,pre=el.dataset.pre||'',suf=el.dataset.suf||'';if(reduce){el.textContent=pre+to+suf;return}const t0=performance.now();(function step(t){const p=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-p,4);el.textContent=pre+Math.round(to*e)+suf;if(p<1)requestAnimationFrame(step)})(t0)})}
+countUp();
+
+/* ---------- confetti ---------- */
+function celebrate(){if(reduce)return;const c=$('#confetti'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;const cols=['#7c9cff','#4de8d4','#ffb86b','#ff8fc2','#56e0a0','#b49aff'];
+  const ps=Array.from({length:150},()=>({x:innerWidth/2+(Math.random()-.5)*200,y:innerHeight*.55,vx:(Math.random()-.5)*16,vy:-Math.random()*17-5,s:Math.random()*8+4,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[Math.random()*cols.length|0],l:1}));
+  (function f(){x.clearRect(0,0,c.width,c.height);let alive=0;ps.forEach(p=>{p.vy+=.45;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.l-=.009;if(p.l>0&&p.y<c.height+20){alive++;x.save();x.globalAlpha=Math.max(0,p.l);x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/3,p.s,p.s*.6);x.restore()}});if(alive)requestAnimationFrame(f);else x.clearRect(0,0,c.width,c.height)})()}
+
+/* ---------- hero constellation ---------- */
+(function(){const c=$('#heroCanvas'),x=c.getContext('2d');let w=0,h=0,pts=[],mx=-999,my=-999,vis=true,raf=0;
+  function size(){const r=c.parentElement.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);w=r.width;h=r.height;c.width=w*d;c.height=h*d;x.setTransform(d,0,0,d,0,0);const n=Math.round(Math.min(95,Math.max(30,w*Math.min(h,900)/17000)));pts=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.38,vy:(Math.random()-.5)*.38}))}
+  function draw(){x.clearRect(0,0,w,h);const col=root.dataset.theme==='light'?'52,88,219':'124,156,255';
+    pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;const dx=p.x-mx,dy=p.y-my,d=Math.hypot(dx,dy);if(d<140){p.x+=dx/d*.9;p.y+=dy/d*.9}});
+    for(let i=0;i<pts.length;i++){const a=pts[i];x.fillStyle=`rgba(${col},.65)`;x.beginPath();x.arc(a.x,a.y,1.6,0,6.3);x.fill();for(let j=i+1;j<pts.length;j++){const b=pts[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<130){x.strokeStyle=`rgba(${col},${(1-d/130)*.32})`;x.lineWidth=1;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke()}}}
+    if(vis&&!reduce)raf=requestAnimationFrame(draw)}
+  size();draw();addEventListener('resize',()=>{size();if(reduce)draw()});
+  c.parentElement.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top},{passive:true});c.parentElement.addEventListener('mouseleave',()=>{mx=my=-999});
+  if('IntersectionObserver' in window)new IntersectionObserver(es=>{vis=es[0].isIntersecting;cancelAnimationFrame(raf);if(vis&&!reduce)draw()}).observe(c.parentElement)})();
+
+/* ---------- deep link ---------- */
+const h0=location.hash.slice(1);if(VIEWS.includes(h0))openView(h0,true);
+</script></body></html>
